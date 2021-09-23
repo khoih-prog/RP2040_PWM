@@ -7,32 +7,60 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+### Describe the bug
+
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+### Steps to Reproduce
 
-**Expected behavior**
+Steps to reproduce the behavior. Including the [MRE](https://stackoverflow.com/help/minimal-reproducible-example) sketches
+
+### Expected behavior
+
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+### Actual behavior
+
+A clear and concise description of what you expected to happen.
+
+### Debug and AT-command log (if applicable)
+
+A clear and concise description of what you expected to happen.
+
+### Screenshots
+
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+### Information
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+Please ensure to specify the following:
 
-**Additional context**
+* Arduino IDE version (e.g. 1.8.13) or Platform.io version
+* `ESP8266`,`ESP32` or `STM32` Core Version (e.g. ESP8266 core v2.7.4, ESP32 v1.0.5 or STM32 v1.9.0)
+* Contextual information (e.g. what you were trying to achieve)
+* Simplest possible steps to reproduce
+* Anything that might be relevant in your opinion, such as:
+  * Operating system (Windows, Ubuntu, etc.) and the output of `uname -a`
+  * Network configuration
+  
+### Example
+
+```
+Arduino IDE version: 1.8.13
+ESP32 Core Version 1.0.5
+OS: Ubuntu 20.04 LTS
+Linux xy-Inspiron-3593 5.4.0-66-generic #74-Ubuntu SMP Wed Jan 27 22:54:38 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+
+Context:
+I encountered an endless loop while trying to connect to Local WiFi.
+
+Steps to reproduce:
+1. ...
+2. ...
+3. ...
+4. ...
+```
+
+### Additional context
+
 Add any other context about the problem here.
