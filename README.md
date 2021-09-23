@@ -171,7 +171,7 @@ Slices can be enabled or disabled simultaneously via a single, global control re
 
 All 30 GPIO pins on RP2040 can be used for PWM:
 
-- The 16 PWM channels (8 2-channel slices) appear on GPIO0 to GPIO15, in the order PWM0 A, PWM0 B, PWM1 A…
+- The 16 PWM channels (8 2-channel slices) appear on GPIO0 to GPIO15, in the order PWM0_A, PWM0_B, PWM1_A, etc.
 - This repeats for GPIO16 to GPIO29. GPIO16 is PWM0 A, GPIO17 is PWM0 B, so on up to PWM6 B on GPIO29
 - The same PWM output can be selected on two GPIO pins; the same signal will appear on each GPIO.
 - If a PWM B pin is used as an input, and is selected on multiple GPIO pins, then the PWM slice will see the logical OR of those two GPIO inputs
