@@ -149,18 +149,18 @@ The RP2040 PWM block has 8 identical slices. Each slice can drive two PWM output
 
 Each PWM slice is equipped with the following:
 
-• 16-bit counter
-• 8.4 fractional clock divider
-• Two independent output channels, duty cycle from 0% to 100% inclusive
-• Dual slope and trailing edge modulation
-• Edge-sensitive input mode for frequency measurement
-• Level-sensitive input mode for duty cycle measurement
-• Configurable counter wrap value
-◦ Wrap and level registers are double buffered and can be changed race-free while PWM is running
-• Interrupt request and DMA request on counter wrap
-• Phase can be precisely advanced or retarded while running (increments of one count)
-Slices can be enabled or disabled simultaneously via a single, global control register. The slices then run in perfect
-lockstep, so that more complex power circuitry can be switched by the outputs of multiple slices.
+- 16-bit counter
+- 8.4 fractional clock divider
+- Two independent output channels, duty cycle from 0% to 100% inclusive
+- Dual slope and trailing edge modulation
+- Edge-sensitive input mode for frequency measurement
+- Level-sensitive input mode for duty cycle measurement
+- Configurable counter wrap value
+- Wrap and level registers are double buffered and can be changed race-free while PWM is running
+- Interrupt request and DMA request on counter wrap
+- Phase can be precisely advanced or retarded while running (increments of one count)
+
+Slices can be enabled or disabled simultaneously via a single, global control register. The slices then run in perfect lockstep, so that more complex power circuitry can be switched by the outputs of multiple slices.
 
 
 #### Programmer’s Model
@@ -171,11 +171,10 @@ lockstep, so that more complex power circuitry can be switched by the outputs of
 
 All 30 GPIO pins on RP2040 can be used for PWM:
 
-• The 16 PWM channels (8 2-channel slices) appear on GPIO0 to GPIO15, in the order PWM0 A, PWM0 B, PWM1 A…
-• This repeats for GPIO16 to GPIO29. GPIO16 is PWM0 A, GPIO17 is PWM0 B, so on up to PWM6 B on GPIO29
-• The same PWM output can be selected on two GPIO pins; the same signal will appear on each GPIO.
-• If a PWM B pin is used as an input, and is selected on multiple GPIO pins, then the PWM slice will see the logical
-OR of those two GPIO inputs
+- The 16 PWM channels (8 2-channel slices) appear on GPIO0 to GPIO15, in the order PWM0 A, PWM0 B, PWM1 A…
+- This repeats for GPIO16 to GPIO29. GPIO16 is PWM0 A, GPIO17 is PWM0 B, so on up to PWM6 B on GPIO29
+- The same PWM output can be selected on two GPIO pins; the same signal will appear on each GPIO.
+- If a PWM B pin is used as an input, and is selected on multiple GPIO pins, then the PWM slice will see the logical OR of those two GPIO inputs
 
 
 ---
