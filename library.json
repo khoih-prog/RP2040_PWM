@@ -1,0 +1,29 @@
+{
+  "name": "RP2040_PWM",
+  "version": "1.0.0",
+  "keywords": "timing, device, control, timer, pwm, pwm-slice, hardware-based-pwm, high-frequency-pwm, hardware-pwm, mission-critical, accuracy, non-blocking, mbed, mbed-nano, mbed-rp2040, rpi-pico, rp2040, nano-rp2040-connect, precise, hardware",
+  "description": "This library enables you to use Hardware-based PWM channels on RP2040-based boards, such as Nano_RP2040_Connect, RASPBERRY_PI_PICO, with either Arduino-mbed (mbed_nano or mbed_rp2040) or arduino-pico core to create and output PWM any GPIO pin. The most important feature is they're purely hardware-based PWM channels, supporting very high PWM frequencies. Therefore, their executions are not blocked by bad-behaving functions or tasks. This important feature is absolutely necessary for mission-critical tasks. These hardware-based PWMs, still work even if other software functions are blocking. Moreover, they are much more precise (certainly depending on clock frequency accuracy) than other software-based PWM using ISR, millis() or micros(). That's necessary if you need to control devices requiring high precision",
+  "authors":
+  {
+    "name":  "Khoi Hoang",
+    "url":   "https://github.com/khoih-prog",
+    "maintainer": true
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "//https://github.com/khoih-prog/RP2040_PWM"
+  },
+  "homepage": "https://github.com/khoih-prog/RP2040_PWM",
+  "export": {
+    "exclude": [
+      "linux",
+      "extras",
+      "tests"
+    ]
+  },
+  "frameworks": "*",
+  "platforms": ["mbed_nano", "mbed_rp2040", "rp2040"],
+  "examples": "examples/*/*/*.ino",
+  "license": "MIT"
+}

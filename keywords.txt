@@ -1,0 +1,30 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+RP2040_PWM	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+###################################
+# Class RP2040_PWM
+###################################
+
+setPWM	KEYWORD2
+setPWM_Period	KEYWORD2
+enablePWM	KEYWORD2
+disablePWM	KEYWORD2
+get_TOP	KEYWORD2
+get_DIV	KEYWORD2
+getActualFreq	KEYWORD2
+get_freq_CPU	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+RP2040_PWM_VERSION  LITERAL1
+MIN_PWM_FREQENCY  LITERAL1
