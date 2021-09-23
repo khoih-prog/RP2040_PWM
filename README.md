@@ -29,7 +29,7 @@
   * [2. Initizlize PWM Instance](#1-Initizlize-PWM-Instance)
 * [Examples](#examples)
   * [ 1. PWM_Multi](examples/PWM_Multi)
- [Example PWM_Multi](#example-PWM_Multi)
+* [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
   * [2. PWM_Multi on RASPBERRY_PI_PICO](#2-PWM_Multi-on-RASPBERRY_PI_PICO)
@@ -185,7 +185,7 @@ OR of those two GPIO inputs
 
 Before using any PWM `slice`, you have to make sure the `slice` has not been used by any other purpose.
 
-### 1. Create PWM Instance with Pin, Frequency and dutycycle
+#### 1. Create PWM Instance with Pin, Frequency and dutycycle
 
 ```
 RP2040_PWM* PWM_Instance;
