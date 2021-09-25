@@ -12,11 +12,12 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.0.0
+  Version: 1.0.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K.Hoang      21/09/2021 Initial coding for RP2040 using ArduinoCore-mbed or arduino-pico core
+  1.0.1   K.Hoang      24/09/2021 Fix bug generating wrong frequency
 *****************************************************************************************************************************/
 
 #pragma once
@@ -47,7 +48,7 @@
 
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.0"
+  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.1"
 #endif
 
 #include <math.h>
@@ -207,83 +208,6 @@ class RP2040_PWM
   
   // https://datasheets.raspberrypi.org/rp2040/rp2040-datasheet.pdf, page 549
   // https://raspberrypi.github.io/pico-sdk-doxygen/group__hardware__pwm.html
-  //
-  // Best-fit algorithm from https://www.raspberrypi.org/forums/viewtopic.php?f=144&t=317593
-  
-  bool calc_TOP_and_DIV_HighFreq(double freq)
-  {
-    #define BIG_FLOAT                     2000000000.0f
-    #define MAX_16_BIT                    65536
-    #define MAX_12_BIT                    4096
-  
-    unsigned int Top_p_1;                 // Top + 1
-    double PWM_Freq = freq;               // frequency required
-    double bestfit_PWM_Freq;              // closest frequency
-    double PWM_Freq_diff;                 // frequency error in Hz
-    double PWM_Freq_bestdiff;             // best absolute error in Hz
-    unsigned int best_TOP_P_1 = 1;        // best Top + 1
-    double best_DIV_x_16 = 0;             // best DIV * 16
-
-    // Will use 16X vdiv so loop counters are integer
-    // to equal this out main clock is also X16
-    unsigned int vsDiv;
-
-    // used to check error is not increasing as DIV increases
-    // so I can escape the DIV loop/
-    double vLastError;
-
-    // initialise current error by maxing out
-    PWM_Freq_bestdiff = DBL_MAX;
-   
-    Top_p_1 = min(MAX_16_BIT, (freq_CPU / PWM_Freq) + 2) ;
-
-    while (Top_p_1 > 1)
-    {
-      // max out last error
-      vLastError = DBL_MAX;
-     
-      vsDiv = max(16, ((int)(BIG_FLOAT / PWM_Freq / Top_p_1)) - 2);
-
-      while (vsDiv < MAX_12_BIT)
-      {
-        bestfit_PWM_Freq = BIG_FLOAT / (vsDiv * Top_p_1);
-        PWM_Freq_diff = fabs(bestfit_PWM_Freq - PWM_Freq);
-
-        // bomb out DIV loop if error rising
-        if (PWM_Freq_diff > vLastError)
-          break;
-
-        vLastError = PWM_Freq_diff ;
-
-        if (PWM_Freq_diff < PWM_Freq_bestdiff)
-        {
-          PWM_LOGDEBUG7("bestfit_PWM_Freq = ", bestfit_PWM_Freq, ", PWM_Freq_diff = ", PWM_Freq_diff, ", Top_p_1 - 1 = ", 
-                          Top_p_1 - 1, ", vsDiv/16.0 = ", vsDiv / 16.0);
-          
-          PWM_Freq_bestdiff = PWM_Freq_diff;
-          best_TOP_P_1      = Top_p_1;
-          best_DIV_x_16   = vsDiv;
-        }
-
-        vsDiv += 1;
-      }
-
-      Top_p_1 -= 1;
-    }
-    
-    bestfit_PWM_Freq = freq_CPU / (best_DIV_x_16 * best_TOP_P_1 / 16.0);
-    PWM_Freq_diff = fabs(bestfit_PWM_Freq - PWM_Freq);
-
-    _PWM_config.div = best_DIV_x_16 / 16;
-    _PWM_config.top = best_TOP_P_1 - 1;
-
-    _actualFrequency = bestfit_PWM_Freq;
-
-    PWM_LOGINFO5("PWM_Freq = ", freq, ", _actualFrequency = ", _actualFrequency, ", PWM_Freq_diff = ", PWM_Freq_diff);
-    PWM_LOGDEBUG3("TOP = ", _PWM_config.div, "DIV = ", _PWM_config.div);
-
-    return true;
-  }
   
   ///////////////////////////////////////////
   
@@ -291,8 +215,7 @@ class RP2040_PWM
   {           
     if (freq >= 2000.0)
     {
-      calc_TOP_and_DIV_HighFreq(freq);
-      return true;
+      _PWM_config.div = 1;
     }
     else if (freq >= 200.0) 
     {
@@ -308,8 +231,7 @@ class RP2040_PWM
     }
     else if (freq >= MIN_PWM_FREQUENCY)
     {
-      calc_TOP_and_DIV_HighFreq(freq);
-      return true;
+      _PWM_config.div = 255;
     }
     else
     {
@@ -318,7 +240,7 @@ class RP2040_PWM
       return false;
     }
     
-    // Formula => PWF_Freq = ( F_CPU ) / [ ( TOP + 1 ) * ( DIV + DIV_FRAC/16) ]
+    // Formula => PWM_Freq = ( F_CPU ) / [ ( TOP + 1 ) * ( DIV + DIV_FRAC/16) ]
     _PWM_config.top = ( freq_CPU / freq / _PWM_config.div ) - 1;
     
     _actualFrequency = ( freq_CPU  ) / ( (_PWM_config.top + 1) * _PWM_config.div );

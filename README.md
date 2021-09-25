@@ -318,7 +318,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.0.0
+RP2040_PWM v1.0.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -341,7 +341,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.0.0
+RP2040_PWM v1.0.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -409,7 +409,14 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
 
 Many thanks for everyone for bug reporting, new feature suggesting, testing and contributing to the development of this library.
 
+1. Thanks to [americodias](https://github.com/americodias) to report bugs in [Wrong frequency #1](https://github.com/khoih-prog/RP2040_PWM/issues/1) leading to v1.0.1
 
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/americodias"><img src="https://github.com/americodias.png" width="100px;" alt="americodias"/><br /><sub><b>Américo Dias</b></sub></a><br /></td>
+  </tr>
+</table>
+  
 ---
 
 ## Contributing
