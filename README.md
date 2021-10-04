@@ -29,7 +29,7 @@
   * [2. Initizlize PWM Instance](#1-Initizlize-PWM-Instance)
 * [Examples](#examples)
   * [ 1. PWM_Multi](examples/PWM_Multi)
-  * [ 2. PWM_Multi](examples/PWM_DynamicFreq)
+  * [ 2. PWM_DynamicFreq](examples/PWM_DynamicFreq)
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
