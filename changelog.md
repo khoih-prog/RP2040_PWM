@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.0.2](#Releases-v102)
   * [Releases v1.0.1](#Releases-v101)
   * [Initial Releases v1.0.0](#Initial-Releases-v100)
 
@@ -19,6 +20,10 @@
 ---
 
 ## Changelog
+
+### Releases v1.0.2
+
+1. Fix bug not changing frequency dynamically. See [Change the PWM frequency #2](https://github.com/khoih-prog/RP2040_PWM/issues/2)
 
 ### Releases v1.0.1
 

@@ -12,12 +12,13 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.0.1
+  Version: 1.0.2
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K.Hoang      21/09/2021 Initial coding for RP2040 using ArduinoCore-mbed or arduino-pico core
   1.0.1   K.Hoang      24/09/2021 Fix bug generating wrong frequency
+  1.0.2   K.Hoang      04/10/2021 Fix bug not changing frequency dynamically
 *****************************************************************************************************************************/
 
 #pragma once
@@ -48,7 +49,7 @@
 
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.1"
+  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.2"
 #endif
 
 #include <math.h>
@@ -110,8 +111,25 @@ class RP2040_PWM
     if ( (frequency <= MAX_PWM_FREQUENCY) && (frequency >= MIN_PWM_FREQUENCY) )
     {   
       _pin        = pin;
-      _frequency  = frequency;
+      //_frequency  = frequency;
       _dutycycle  = dutycycle;
+      
+      if (_frequency != frequency)
+      {
+        if (!calc_TOP_and_DIV(frequency))
+        {
+          _frequency  = 0;
+        }
+        else
+        {
+          _frequency  = frequency;
+          PWM_LOGDEBUG1("Changing PWM frequency to", _frequency);
+        }
+      }
+      else
+      {
+        PWM_LOGDEBUG1("No change, same PWM frequency =", frequency);
+      }
       
       gpio_set_function(_pin, GPIO_FUNC_PWM);
       
@@ -235,7 +253,7 @@ class RP2040_PWM
     }
     else
     {
-      PWM_LOGERROR1("Error, freq must be >= ", MIN_PWM_FREQUENCY);
+      PWM_LOGERROR1("Error, freq must be >=", MIN_PWM_FREQUENCY);
       
       return false;
     }

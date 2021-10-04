@@ -29,10 +29,12 @@
   * [2. Initizlize PWM Instance](#1-Initizlize-PWM-Instance)
 * [Examples](#examples)
   * [ 1. PWM_Multi](examples/PWM_Multi)
+  * [ 2. PWM_Multi](examples/PWM_DynamicFreq)
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
   * [2. PWM_Multi on RASPBERRY_PI_PICO](#2-PWM_Multi-on-RASPBERRY_PI_PICO)
+  * [3. PWM_DynamicFreq on Nano RP2040 Connect](#3-PWM_DynamicFreq-on-Nano-RP2040-Connect)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -207,6 +209,7 @@ if (PWM_Instance)
 ### Examples: 
 
  1. [PWM_Multi](examples/PWM_Multi)
+ 2. [PWM_DynamicFreq](examples/PWM_DynamicFreq). **New**
  
 ---
 ---
@@ -289,7 +292,7 @@ void setup()
 
       Serial.print("\t\t"); Serial.println(PWM_Instance[index]->getActualFreq());
       
-      PWM_LOGDEBUG5("\nTOP = ", top, ", DIV = ", div, ", CPU_freq = ", PWM_Instance[index]->get_freq_CPU());
+      PWM_LOGDEBUG5("\nTOP =", top, ", DIV =", div, ", CPU_freq =", PWM_Instance[index]->get_freq_CPU());
     }
     else
     {
@@ -318,7 +321,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.0.1
+RP2040_PWM v1.0.2
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -337,11 +340,11 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 
 ### 2. PWM_Multi on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_Multi**](examples/PWM_Multi) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico),  to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
+The following is the sample terminal output when running example [**PWM_Multi**](examples/PWM_Multi) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
 
 ```
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.0.1
+RP2040_PWM v1.0.2
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -356,6 +359,43 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
 ```
 
+---
+
+### 3. PWM_DynamicFreq on Nano RP2040 Connect
+
+The following is the sample terminal output when running example [**PWM_DynamicFreq**](examples/PWM_DynamicFreq) on **Nano RP2040 Connect**, running running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to change dynamically PWM frequencies and the accuracy of Hardware-based PWM.
+
+```
+Starting PWM_DynamicFreq on Nano RP2040 Connect
+RP2040_PWM v1.0.2
+[PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
+[PWM] No change, same PWM frequency = 1000.00
+=============================================================
+Change PWM Freq to 2000.00
+[PWM] _PWM_config.top = 62499 , _actualFrequency = 2000.00
+[PWM] Changing PWM frequency to 2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 62499 , DIV = 1 , CPU_freq = 125000000
+Change PWM Freq to 1000.00
+[PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
+[PWM] Changing PWM frequency to 1000.00
+Actual PWM Frequency = 1000.00
+[PWM] TOP = 12499 , DIV = 10 , CPU_freq = 125000000
+Change PWM Freq to 2000.00
+[PWM] _PWM_config.top = 62499 , _actualFrequency = 2000.00
+[PWM] Changing PWM frequency to 2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 62499 , DIV = 1 , CPU_freq = 125000000
+Change PWM Freq to 1000.00
+[PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
+[PWM] Changing PWM frequency to 1000.00
+Actual PWM Frequency = 1000.00
+[PWM] TOP = 12499 , DIV = 10 , CPU_freq = 125000000
+Change PWM Freq to 2000.00
+[PWM] _PWM_config.top = 62499 , _actualFrequency = 2000.00
+[PWM] Changing PWM frequency to 2000.00
+Actual PWM Frequency = 2000.00
+```
 
 ---
 ---
@@ -409,11 +449,14 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
 
 Many thanks for everyone for bug reporting, new feature suggesting, testing and contributing to the development of this library.
 
-1. Thanks to [americodias](https://github.com/americodias) to report bugs in [Wrong frequency #1](https://github.com/khoih-prog/RP2040_PWM/issues/1) leading to v1.0.1
+1. Thanks to [americodias](https://github.com/americodias) to report bugs in 
+
+- [Wrong frequency #1](https://github.com/khoih-prog/RP2040_PWM/issues/1) leading to v1.0.1
+- [Change the PWM frequency #2](https://github.com/khoih-prog/RP2040_PWM/issues/2) leading to v1.0.2
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/americodias"><img src="https://github.com/americodias.png" width="100px;" alt="americodias"/><br /><sub><b>Américo Dias</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/americodias"><img src="https://github.com/americodias.png" width="100px;" alt="americodias"/><br /><sub><b>⭐️ Américo Dias</b></sub></a><br /></td>
   </tr>
 </table>
   
