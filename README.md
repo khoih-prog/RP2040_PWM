@@ -139,7 +139,7 @@ Another way to install is to:
 
 #### PWM overview
 
-From https://datasheets.raspberrypi.org/rp2040/rp2040-datasheet.pdf, page 543
+From [rp2040-datasheet.pdf](https://datasheets.raspberrypi.org/rp2040/rp2040-datasheet.pdf), page 543
 
 Pulse width modulation (PWM) is a scheme where a digital signal provides a smoothly varying average voltage. This is achieved with positive pulses of some controlled width, at regular intervals. The fraction of time spent high is known as the duty cycle. This may be used to approximate an analog output, or control switchmode power electronics.
 
@@ -321,7 +321,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.0.2
+RP2040_PWM v1.0.3
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -344,7 +344,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.0.2
+RP2040_PWM v1.0.3
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -367,34 +367,40 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.0.2
+RP2040_PWM v1.0.3
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
-[PWM] No change, same PWM frequency = 1000.00
+[PWM] PWM enabled, frequency = 1000.00
 =============================================================
 Change PWM Freq to 2000.00
 [PWM] _PWM_config.top = 62499 , _actualFrequency = 2000.00
 [PWM] Changing PWM frequency to 2000.00
+[PWM] PWM enabled, frequency = 2000.00
 Actual PWM Frequency = 2000.00
 [PWM] TOP = 62499 , DIV = 1 , CPU_freq = 125000000
 Change PWM Freq to 1000.00
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] Changing PWM frequency to 1000.00
+[PWM] PWM enabled, frequency = 1000.00
 Actual PWM Frequency = 1000.00
 [PWM] TOP = 12499 , DIV = 10 , CPU_freq = 125000000
 Change PWM Freq to 2000.00
 [PWM] _PWM_config.top = 62499 , _actualFrequency = 2000.00
 [PWM] Changing PWM frequency to 2000.00
+[PWM] PWM enabled, frequency = 2000.00
 Actual PWM Frequency = 2000.00
 [PWM] TOP = 62499 , DIV = 1 , CPU_freq = 125000000
 Change PWM Freq to 1000.00
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] Changing PWM frequency to 1000.00
+[PWM] PWM enabled, frequency = 1000.00
 Actual PWM Frequency = 1000.00
 [PWM] TOP = 12499 , DIV = 10 , CPU_freq = 125000000
 Change PWM Freq to 2000.00
 [PWM] _PWM_config.top = 62499 , _actualFrequency = 2000.00
 [PWM] Changing PWM frequency to 2000.00
+[PWM] PWM enabled, frequency = 2000.00
 Actual PWM Frequency = 2000.00
+[PWM] TOP = 62499 , DIV = 1 , CPU_freq = 125000000
 ```
 
 ---

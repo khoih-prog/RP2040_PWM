@@ -10,13 +10,14 @@
   or duty cycle of an input signal. This gives a total of up to 16 controllable PWM outputs. All 30 GPIO pins can be driven
   by the PWM block
 
-  Version: 1.0.2
+  Version: 1.0.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K.Hoang      21/09/2021 Initial coding for RP2040 using ArduinoCore-mbed or arduino-pico core
   1.0.1   K.Hoang      24/09/2021 Fix bug generating wrong frequency
   1.0.2   K.Hoang      04/10/2021 Fix bug not changing frequency dynamically
+  1.0.3   K.Hoang      05/10/2021 Not reprogram if same PWM frequency. Add PIO strict `lib_compat_mode`
 *****************************************************************************************************************************/
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \

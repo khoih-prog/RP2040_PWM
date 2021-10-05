@@ -31,7 +31,7 @@ Arduino IDE version: 1.8.16
 Arduino-mbed mbed_nano v2.5.2
 NANO_RP2040_CONNECT Module
 OS: Ubuntu 20.04 LTS
-Linux xy-Inspiron-3593 5.4.0-84-generic #94-Ubuntu SMP Thu Aug 26 20:27:37 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+Linux xy-Inspiron-3593 5.4.0-88-generic #99-Ubuntu SMP Thu Sep 23 17:29:00 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
 
 Context:
 I encountered a crash while using TimerInterrupt.

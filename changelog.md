@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.0.3](#Releases-v103)
   * [Releases v1.0.2](#Releases-v102)
   * [Releases v1.0.1](#Releases-v101)
   * [Initial Releases v1.0.0](#Initial-Releases-v100)
@@ -20,6 +21,12 @@
 ---
 
 ## Changelog
+
+### Releases v1.0.3
+
+1. Not reprogram if same PWM frequency. 
+2. Add PIO strict `lib_compat_mode`
+
 
 ### Releases v1.0.2
 

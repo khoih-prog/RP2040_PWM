@@ -12,13 +12,14 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.0.2
+  Version: 1.0.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K.Hoang      21/09/2021 Initial coding for RP2040 using ArduinoCore-mbed or arduino-pico core
   1.0.1   K.Hoang      24/09/2021 Fix bug generating wrong frequency
   1.0.2   K.Hoang      04/10/2021 Fix bug not changing frequency dynamically
+  1.0.3   K.Hoang      05/10/2021 Not reprogram if same PWM frequency. Add PIO strict `lib_compat_mode`
 *****************************************************************************************************************************/
 
 #pragma once
@@ -49,7 +50,7 @@
 
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.2"
+  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.3"
 #endif
 
 #include <math.h>
@@ -91,6 +92,8 @@ class RP2040_PWM
     _dutycycle    = dutycycle;
     
     _phaseCorrect = phaseCorrect;
+    
+    _enabled      = false;
   }
   
   ///////////////////////////////////////////
@@ -108,6 +111,8 @@ class RP2040_PWM
   
   bool setPWM(uint8_t pin, double frequency, double dutycycle, bool phaseCorrect = false)
   {
+    bool newFreq = false;
+    
     if ( (frequency <= MAX_PWM_FREQUENCY) && (frequency >= MIN_PWM_FREQUENCY) )
     {   
       _pin        = pin;
@@ -123,31 +128,38 @@ class RP2040_PWM
         else
         {
           _frequency  = frequency;
+          newFreq     = true;
+          
           PWM_LOGDEBUG1("Changing PWM frequency to", _frequency);
         }
       }
-      else
+      else if (_enabled)
       {
         PWM_LOGDEBUG1("No change, same PWM frequency =", frequency);
       }
       
-      gpio_set_function(_pin, GPIO_FUNC_PWM);
-      
-      _slice_num = pwm_gpio_to_slice_num(_pin);
-      
-      pwm_config config = pwm_get_default_config();
-      
-      // Set phaseCorrect
-      pwm_set_phase_correct(_slice_num, phaseCorrect);
-         
-      pwm_config_set_clkdiv_int(&config, _PWM_config.div);
-      pwm_config_set_wrap(&config, _PWM_config.top);
-      
-      // auto start running once configured
-      pwm_init(_slice_num, &config, true);
-      pwm_set_gpio_level(_pin, ( _PWM_config.top * _dutycycle ) / 100 );
-      
-      _enabled = true;
+      if ( (!_enabled) || newFreq )
+      {
+        gpio_set_function(_pin, GPIO_FUNC_PWM);
+        
+        _slice_num = pwm_gpio_to_slice_num(_pin);
+        
+        pwm_config config = pwm_get_default_config();
+        
+        // Set phaseCorrect
+        pwm_set_phase_correct(_slice_num, phaseCorrect);
+           
+        pwm_config_set_clkdiv_int(&config, _PWM_config.div);
+        pwm_config_set_wrap(&config, _PWM_config.top);
+        
+        // auto start running once configured
+        pwm_init(_slice_num, &config, true);
+        pwm_set_gpio_level(_pin, ( _PWM_config.top * _dutycycle ) / 100 );
+        
+        _enabled = true;
+        
+        PWM_LOGDEBUG1("PWM enabled, frequency =", _frequency);
+      }
     
       return true;
     }
