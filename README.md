@@ -321,7 +321,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.0.3
+RP2040_PWM v1.0.4
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -344,7 +344,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.0.3
+RP2040_PWM v1.0.4
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -367,7 +367,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.0.3
+RP2040_PWM v1.0.4
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
