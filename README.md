@@ -379,7 +379,7 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 
 ### 3. PWM_DynamicFreq on Nano RP2040 Connect
 
-The following is the sample terminal output when running example [**PWM_DynamicFreq**](examples/PWM_DynamicFreq) on **Nano RP2040 Connect**, running running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to change dynamically PWM frequencies and the accuracy of Hardware-based PWM.
+The following is the sample terminal output when running example [**PWM_DynamicFreq**](examples/PWM_DynamicFreq) on **Nano RP2040 Connect**, running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to change dynamically PWM frequencies and the accuracy of Hardware-based PWM.
 
 ```
 Starting PWM_DynamicFreq on Nano RP2040 Connect
@@ -424,7 +424,7 @@ Actual PWM Frequency = 2000.00
 
 ### 4. PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_DynamicDutyCycle**](examples/PWM_DynamicDutyCycle) on **RASPBERRY_PI_PICO**, running running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to change dynamically PWM dutyCycle and the accuracy of Hardware-based PWM.
+The following is the sample terminal output when running example [**PWM_DynamicDutyCycle**](examples/PWM_DynamicDutyCycle) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to change dynamically PWM dutyCycle and the accuracy of Hardware-based PWM.
 
 ```
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
