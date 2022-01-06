@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  PWM_DynamicFreq.ino
+  PWM_DynamicDutyCycle.ino
   For RP2040 boards
   Written by Khoi Hoang
 
@@ -40,6 +40,7 @@
 RP2040_PWM* PWM_Instance;
 
 double frequency;
+double dutyCycle;
 
 char dashLine[] = "=============================================================";
 
@@ -49,7 +50,7 @@ void setup()
   while (!Serial);
   delay(100);
 
-  Serial.print(F("\nStarting PWM_DynamicFreq on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStarting PWM_DynamicDutyCycle on ")); Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
 
   frequency = 1000;
@@ -79,14 +80,17 @@ void loop()
 {
   delay(5000);
   frequency = 2000;
-  Serial.print(F("Change PWM Freq to ")); Serial.println(frequency);
-  PWM_Instance->setPWM(pin0, frequency, 50, true);
+  dutyCycle = 50.0;
+  
+  Serial.print(F("Change PWM DutyCycle to ")); Serial.println(dutyCycle);
+  PWM_Instance->setPWM(pin0, frequency, dutyCycle, true);
 
   printPWMInfo(PWM_Instance);
 
   delay(5000);
-  frequency = 1000;
-  Serial.print(F("Change PWM Freq to ")); Serial.println(frequency);
-  PWM_Instance->setPWM(pin0, frequency, 50, true);
+  dutyCycle = 10.0;
+  
+  Serial.print(F("Change PWM DutyCycle to ")); Serial.println(dutyCycle);
+  PWM_Instance->setPWM(pin0, frequency, dutyCycle, true);
   printPWMInfo(PWM_Instance);
 }

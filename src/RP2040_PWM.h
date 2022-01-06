@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.0.4
+  Version: 1.0.5
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -21,6 +21,7 @@
   1.0.2   K.Hoang      04/10/2021 Fix bug not changing frequency dynamically
   1.0.3   K.Hoang      05/10/2021 Not reprogram if same PWM frequency. Add PIO strict `lib_compat_mode`
   1.0.4   K Hoang      22/10/2021 Fix platform in library.json for PIO
+  1.0.5   K Hoang      06/01/2022 Permit changing dutyCycle and keep same frequency on-the-fly
 *****************************************************************************************************************************/
 
 #pragma once
@@ -35,23 +36,33 @@
   #endif  
   #define USING_MBED_RP2040_PWM       true
   
-  #warning USING_MBED_RP2040_PWM in RP2040_PWM.h
+  #if(_PWM_LOGLEVEL_>3)
+    #warning USING_MBED_RP2040_PWM in RP2040_PWM.h
+  #endif
   
 #elif ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) ||  \
-        defined(ARDUINO_GENERIC_RP2040) ) && !defined(ARDUINO_ARCH_MBED) 
+        defined(ARDUINO_ADAFRUIT_ITSYBITSY_RP2040) || defined(ARDUINO_ADAFRUIT_QTPY_RP2040) || defined(ARDUINO_ADAFRUIT_STEMMAFRIEND_RP2040) ||  \
+        defined(ARDUINO_ADAFRUIT_STEMMAFRIEND_RP2040) || defined(ARDUINO_ADAFRUIT_TRINKEYQT_RP2040) || defined(ARDUINO_ADAFRUIT_MACROPAD_RP2040) ||  \
+        defined(ARDUINO_ADAFRUIT_KB2040_RP2040) || defined(ARDUINO_ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_CYTRON_MAKER_NANO_RP2040) ||  \
+        defined(ARDUINO_CYTRON_MAKER_PI_RP2040) || defined(ARDUINO_SPARKFUN_PROMICRO_RP2040) || defined(ARDUINO_CHALLENGER_2040_WIFI_RP2040) ||  \
+        defined(ARDUINO_CHALLENGER_2040_LTE_RP2040) || defined(ARDUINO_CHALLENGER_NB_2040_WIFI_RP2040) || defined(ARDUINO_ILABS_2040_RPICO32_RP2040) ||  \
+        defined(ARDUINO_MELOPERO_SHAKE_RP2040) || defined(ARDUINO_SOLDERPARTY_RP2040_STAMP) || defined(ARDUINO_UPESY_RP2040_DEVKIT) ||  \
+        defined(ARDUINO_WIZNET_5100S_EVB_PICO) || defined(ARDUINO_GENERIC_RP2040) ) && !defined(ARDUINO_ARCH_MBED) 
   #if defined(USING_RP2040_PWM)
     #undef USING_RP2040_PWM
   #endif  
   #define USING_RP2040_PWM            true
   
-  #warning USING_MBED_RP2040_PWM in RP2040_PWM.h
+  #if(_PWM_LOGLEVEL_>3)
+    #warning USING_RP2040_PWM in RP2040_PWM.h
+  #endif
 #else
   #error This code is intended to run on the RP2040 mbed_nano, mbed_rp2040 or arduino-pico platform! Please check your Tools->Board setting.
 #endif
 
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.4"
+  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.5"
 #endif
 
 #include <math.h>
@@ -112,13 +123,12 @@ class RP2040_PWM
   
   bool setPWM(uint8_t pin, double frequency, double dutycycle, bool phaseCorrect = false)
   {
-    bool newFreq = false;
+    bool newFreq      = false;
+    bool newDutyCycle = false;
     
     if ( (frequency <= MAX_PWM_FREQUENCY) && (frequency >= MIN_PWM_FREQUENCY) )
     {   
       _pin        = pin;
-      //_frequency  = frequency;
-      _dutycycle  = dutycycle;
       
       if (_frequency != frequency)
       {
@@ -129,17 +139,31 @@ class RP2040_PWM
         else
         {
           _frequency  = frequency;
+          _dutycycle  = dutycycle;
+          
           newFreq     = true;
           
-          PWM_LOGDEBUG1("Changing PWM frequency to", _frequency);
+          PWM_LOGDEBUG3("Changing PWM frequency to", frequency, "and dutyCycle =", _dutycycle);
         }
       }
       else if (_enabled)
       {
-        PWM_LOGDEBUG1("No change, same PWM frequency =", frequency);
+        if (_dutycycle != dutycycle)
+        {
+          _dutycycle  = dutycycle;
+          
+          newDutyCycle     = true;
+          
+          PWM_LOGDEBUG3("Changing PWM DutyCycle to", _dutycycle, "and keeping frequency =", _frequency);
+
+        }
+        else
+        {
+          PWM_LOGDEBUG3("No change, same PWM frequency =", frequency, "and dutyCycle =", _dutycycle);
+        }
       }
       
-      if ( (!_enabled) || newFreq )
+      if ( (!_enabled) || newFreq || newDutyCycle )
       {
         gpio_set_function(_pin, GPIO_FUNC_PWM);
         

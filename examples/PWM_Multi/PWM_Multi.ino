@@ -11,20 +11,24 @@
   by the PWM block
 *****************************************************************************************************************************/
 
+#define _PWM_LOGLEVEL_        4
+
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
 
-  #warning USING_MBED_RP2040_PWM
+  #if(_PWM_LOGLEVEL_>3)
+    #warning USING_MBED_RP2040_PWM
+  #endif
 
 #elif ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
         defined(ARDUINO_GENERIC_RP2040) ) && !defined(ARDUINO_ARCH_MBED)
 
-  #warning USING_MBED_RP2040_PWM
+  #if(_PWM_LOGLEVEL_>3)
+    #warning USING_RP2040_PWM
+  #endif
 #else
   #error This code is intended to run on the RP2040 mbed_nano, mbed_rp2040 or arduino-pico platform! Please check your Tools->Board setting.
 #endif
-
-#define _PWM_LOGLEVEL_        1
 
 #include "RP2040_PWM.h"
 

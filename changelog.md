@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.0.5](#Releases-v105)
   * [Releases v1.0.4](#Releases-v104)
   * [Releases v1.0.3](#Releases-v103)
   * [Releases v1.0.2](#Releases-v102)
@@ -22,6 +23,14 @@
 ---
 
 ## Changelog
+
+### Releases v1.0.5
+
+1. Permit changing dutyCycle and keep same frequency on-the-fly. Check [Attempting to Alter the Duty Cycle w/o changing any other values #3](https://github.com/khoih-prog/RP2040_PWM/issues/3)
+2. Add example [PWM_DynamicDutyCycle](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle) to demonstrate new feature
+3. Add support for more boards using arduino-pico core, such as ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, etc.
+4. Display compiler informational warning messages only when `_PWM_LOGLEVEL_` > 3
+
 
 ### Releases v1.0.4
 
