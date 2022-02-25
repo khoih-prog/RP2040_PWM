@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  PWM_Multi.ino
+  PWM_MultiChannel.ino
   For RP2040 boards
   Written by Khoi Hoang
 
@@ -9,9 +9,11 @@
   The RP2040 PWM block has 8 identical slices. Each slice can drive two PWM output signals, or measure the frequency
   or duty cycle of an input signal. This gives a total of up to 16 controllable PWM outputs. All 30 GPIO pins can be driven
   by the PWM block
+
+  To demonstrate how to use 2 channels of the same slice to output PWM, with same frequency but different duty-cycle
 *****************************************************************************************************************************/
 
-#define _PWM_LOGLEVEL_        3
+#define _PWM_LOGLEVEL_        1
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
@@ -35,24 +37,18 @@
 #define LED_ON        LOW
 #define LED_OFF       HIGH
 
-#define pin0    25    // PWM channel 4B, BUILTIN_LED
-//#define pin0    0   // PWM channel 0A
-#define pin1    2     // PWM channel 1A
-#define pin2    4     // PWM channel 2A
-#define pin3    6     // PWM channel 3A
-#define pin4    0     // PWM channel 0A
-#define pin5    10    // PWM channel 5A
-#define pin6    12    // PWM channel 6A
-#define pin7    14    // PWM channel 7A
+// Same slice to output PWM (same frequency but different duty-cycle)
+#define pin10   10    // PWM channel 5A
+#define pin11   11    // PWM channel 5B
 
-uint32_t PWM_Pins[]       = { pin0, pin1, pin2, pin3, pin4, pin5, pin6, pin7 };
+uint32_t PWM_Pins[]       = { pin10, pin11 };
 
 #define NUM_OF_PINS       ( sizeof(PWM_Pins) / sizeof(uint32_t) )
 
-float dutyCycle[NUM_OF_PINS]  = { 10.0f, 50.0f, 30.0f, 40.0f, 50.0f, 60.0f, 70.0f, 80.0f };
+float dutyCycle[]  = { 10.0f, 50.0f };
 
-float freq[] = { 7.50f, 8.0f, 10.0f, 1000.0f, 2000.0f, 3000.0f, 8000.0f, 9999.0f };
-
+// Must be same frequency for same slice
+float freq = 1000.0f;
 
 RP2040_PWM* PWM_Instance[NUM_OF_PINS];
 
@@ -65,7 +61,7 @@ void setup()
 
   delay(100);
 
-  Serial.print(F("\nStarting PWM_Multi on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStarting PWM_MultiChannel on ")); Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
 
   Serial.println(dashLine);
@@ -76,10 +72,10 @@ void setup()
   {   
     Serial.print(index);
     Serial.print("\t"); Serial.print(PWM_Pins[index]);
-    Serial.print("\t"); Serial.print(freq[index]);
+    Serial.print("\t"); Serial.print(freq);
     Serial.print("\t\t"); Serial.print(dutyCycle[index]);
 
-    PWM_Instance[index] = new RP2040_PWM(PWM_Pins[index], freq[index], dutyCycle[index]);
+    PWM_Instance[index] = new RP2040_PWM(PWM_Pins[index], freq, dutyCycle[index]);
 
     if (PWM_Instance[index])
     {

@@ -35,12 +35,17 @@
 #define LED_ON        LOW
 #define LED_OFF       HIGH
 
-#define pin0    16    // GP16, PWM channel 4B (D2)
+#define pinLed        25    // GP25, On-board BUILTIN_LED
+#define pin0          16    // GP16, PWM channel 4B (D2)
+#define pin10         10    // PWM channel 5A
+#define pin11         11    // PWM channel 5B
+
+#define pinToUse      pin10
 
 RP2040_PWM* PWM_Instance;
 
-double frequency;
-double dutyCycle;
+float frequency;
+float dutyCycle;
 
 char dashLine[] = "=============================================================";
 
@@ -54,7 +59,7 @@ void setup()
   Serial.println(RP2040_PWM_VERSION);
 
   frequency = 1000;
-  PWM_Instance = new RP2040_PWM(pin0, frequency, 50);
+  PWM_Instance = new RP2040_PWM(pinToUse, frequency, 50);
 
   if (PWM_Instance)
   {
@@ -74,23 +79,21 @@ void printPWMInfo(RP2040_PWM* PWM_Instance)
   PWM_LOGDEBUG5("TOP =", top, ", DIV =", div, ", CPU_freq =", PWM_Instance->get_freq_CPU());
 }
 
-
-
 void loop()
 {
   delay(5000);
-  frequency = 2000;
-  dutyCycle = 50.0;
+  frequency = 2000.0f;
+  dutyCycle = 50.0f;
   
   Serial.print(F("Change PWM DutyCycle to ")); Serial.println(dutyCycle);
-  PWM_Instance->setPWM(pin0, frequency, dutyCycle, true);
+  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle, true);
 
   printPWMInfo(PWM_Instance);
 
   delay(5000);
-  dutyCycle = 10.0;
+  dutyCycle = 10.0f;
   
   Serial.print(F("Change PWM DutyCycle to ")); Serial.println(dutyCycle);
-  PWM_Instance->setPWM(pin0, frequency, dutyCycle, true);
+  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle, true);
   printPWMInfo(PWM_Instance);
 }

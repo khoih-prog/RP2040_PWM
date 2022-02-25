@@ -35,11 +35,15 @@
 #define LED_ON        LOW
 #define LED_OFF       HIGH
 
-#define pin0    16    // GP16, PWM channel 4B (D2)
+#define pin0          16    // GP16, PWM channel 4B (D2)
+#define pin10         10    // PWM channel 5A
+#define pin11         11    // PWM channel 5B
+
+#define pinToUse      pin10
 
 RP2040_PWM* PWM_Instance;
 
-double frequency;
+float frequency;
 
 char dashLine[] = "=============================================================";
 
@@ -52,8 +56,8 @@ void setup()
   Serial.print(F("\nStarting PWM_DynamicFreq on ")); Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
 
-  frequency = 1000;
-  PWM_Instance = new RP2040_PWM(pin0, frequency, 50);
+  frequency = 1000.0f;
+  PWM_Instance = new RP2040_PWM(pinToUse, frequency, 50.0f);
 
   if (PWM_Instance)
   {
@@ -74,19 +78,22 @@ void printPWMInfo(RP2040_PWM* PWM_Instance)
 }
 
 
-
 void loop()
 {
   delay(5000);
-  frequency = 2000;
+  
+  frequency = 2000.0f;
+  
   Serial.print(F("Change PWM Freq to ")); Serial.println(frequency);
-  PWM_Instance->setPWM(pin0, frequency, 50, true);
+  PWM_Instance->setPWM(pinToUse, frequency, 50.0f, true);
 
   printPWMInfo(PWM_Instance);
 
   delay(5000);
-  frequency = 1000;
+  
+  frequency = 1000.0f;
+  
   Serial.print(F("Change PWM Freq to ")); Serial.println(frequency);
-  PWM_Instance->setPWM(pin0, frequency, 50, true);
+  PWM_Instance->setPWM(pinToUse, frequency, 50.0f, true);
   printPWMInfo(PWM_Instance);
 }
