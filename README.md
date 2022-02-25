@@ -234,7 +234,7 @@ PWM_Instance->setPWM(PWM_Pins, new_frequency, new_dutyCycle, true);
 
 ### Example [PWM_Multi](examples/PWM_Multi)
 
-https://github.com/khoih-prog/RP2040_PWM/blob/f17be4db92f97adfb6846eaa7d479d3fed60bcb6/examples/PWM_Multi/PWM_Multi.ino#L14-L108
+https://github.com/khoih-prog/RP2040_PWM/blob/9776c5e13215364a6596cf3e0c5ddd87bfa92cdb/examples/PWM_Multi/PWM_Multi.ino#L1-L108
 
 
 ---
