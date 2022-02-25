@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.1.0](#Releases-v110)
   * [Releases v1.0.5](#Releases-v105)
   * [Releases v1.0.4](#Releases-v104)
   * [Releases v1.0.3](#Releases-v103)
@@ -23,6 +24,13 @@
 ---
 
 ## Changelog
+
+### Releases v1.1.0
+
+1. Permit PWM output for both channels of PWM slice. Check [Request for Clarification on PWM Slices and A/B sides #5](https://github.com/khoih-prog/RP2040_PWM/issues/5)
+2. Use float `instead` of `double` for frequency and duty-cycle
+3. Add example [PWM_MultiChannel](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_MultiChannel) to demonstrate how to use both channels of PWM slice.
+
 
 ### Releases v1.0.5
 
@@ -55,12 +63,4 @@
 
 1. Initial coding to support **RP2040-based boards** such as Nano_RP2040_Connect, RASPBERRY_PI_PICO, etc. using either RP2040 [**ArduinoCore-mbed mbed_nano or mbed_rp2040** core](https://github.com/arduino/ArduinoCore-mbed) or [**Earle Philhower's arduino-pico core**](https://github.com/earlephilhower/arduino-pico)
 2. The purely hardware-based PWM channel can generate from very low (lowest is 7.5Hz) to very high PWM frequencies (in the **MHz** range, up to **62.5MHz**).
-
----
----
-
-## Copyright
-
-Copyright 2021- Khoi Hoang
-
 

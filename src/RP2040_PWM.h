@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.0.5
+  Version: 1.1.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -22,6 +22,7 @@
   1.0.3   K.Hoang      05/10/2021 Not reprogram if same PWM frequency. Add PIO strict `lib_compat_mode`
   1.0.4   K Hoang      22/10/2021 Fix platform in library.json for PIO
   1.0.5   K Hoang      06/01/2022 Permit changing dutyCycle and keep same frequency on-the-fly
+  1.1.0   K Hoang      24/02/2022 Permit PWM output for both channels of PWM slice. Use float instead of double
 *****************************************************************************************************************************/
 
 #pragma once
@@ -60,9 +61,14 @@
   #error This code is intended to run on the RP2040 mbed_nano, mbed_rp2040 or arduino-pico platform! Please check your Tools->Board setting.
 #endif
 
-
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION       "RP2040_PWM v1.0.5"
+  #define RP2040_PWM_VERSION           "RP2040_PWM v1.1.0"
+  
+  #define RP2040_PWM_VERSION_MAJOR     1
+  #define RP2040_PWM_VERSION_MINOR     1
+  #define RP2040_PWM_VERSION_PATCH     0
+
+  #define RP2040_PWM_VERSION_INT       1001000
 #endif
 
 #include <math.h>
@@ -74,13 +80,42 @@
 #define MAX_PWM_FREQUENCY        (62500000.0f)
 #define MIN_PWM_FREQUENCY        (7.5f)
 
+// New from v1.1.0
+///////////////////////
+
+#if !defined(NUM_PWM_SLICES)
+  #define NUM_PWM_SLICES      8
+#endif
+
+typedef struct 
+{
+  float freq;
+  float channelA_div;
+  float channelB_div;
+  bool  channelA_Active;
+  bool  channelB_Active;
+} PWM_slice;
+ 
+static PWM_slice PWM_slice_data[NUM_PWM_SLICES] =
+{
+  { 0, 0, 0, false },
+  { 0, 0, 0, false },
+  { 0, 0, 0, false },
+  { 0, 0, 0, false },
+  { 0, 0, 0, false },
+  { 0, 0, 0, false },
+  { 0, 0, 0, false },
+  { 0, 0, 0, false }
+};
+///////////////////////
+
 ///////////////////////////////////////////////////////////////////
 
 class RP2040_PWM
 { 
   public:
   
-  RP2040_PWM(uint8_t pin, double frequency, double dutycycle, bool phaseCorrect = false)
+  RP2040_PWM(uint8_t pin, float frequency, float dutycycle, bool phaseCorrect = false)
   {
 #if defined(F_CPU)
     freq_CPU = F_CPU;
@@ -121,7 +156,7 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
-  bool setPWM(uint8_t pin, double frequency, double dutycycle, bool phaseCorrect = false)
+  bool setPWM(uint8_t pin, float frequency, float dutycycle, bool phaseCorrect = false)
   {
     bool newFreq      = false;
     bool newDutyCycle = false;
@@ -170,7 +205,7 @@ class RP2040_PWM
         _slice_num = pwm_gpio_to_slice_num(_pin);
         
         pwm_config config = pwm_get_default_config();
-        
+               
         // Set phaseCorrect
         pwm_set_phase_correct(_slice_num, phaseCorrect);
            
@@ -180,10 +215,50 @@ class RP2040_PWM
         // auto start running once configured
         pwm_init(_slice_num, &config, true);
         pwm_set_gpio_level(_pin, ( _PWM_config.top * _dutycycle ) / 100 );
+               
+        // From v1.1.0
+        ////////////////////////////////
+        // Update PWM_slice_data[]
+        PWM_slice_data[_slice_num].freq = _frequency;
+        
+        if ( (pwm_gpio_to_channel(_pin)) == PWM_CHAN_A)
+        {
+          PWM_slice_data[_slice_num].channelA_div     = ( _PWM_config.top * _dutycycle ) / 100;
+          PWM_slice_data[_slice_num].channelA_Active  = true;
+          
+          // If B is active, set the data now
+          if (PWM_slice_data[_slice_num].channelB_Active)
+          {
+            pwm_set_chan_level(_slice_num, PWM_CHAN_B, PWM_slice_data[_slice_num].channelB_div);
+          }
+        }
+        else if ( (pwm_gpio_to_channel(_pin)) == PWM_CHAN_B)
+        {
+          PWM_slice_data[_slice_num].channelB_div     = ( _PWM_config.top * _dutycycle ) / 100;
+          PWM_slice_data[_slice_num].channelB_Active  = true;
+          
+          // If A is active, set the data now
+          if (PWM_slice_data[_slice_num].channelA_Active)
+          {
+            pwm_set_chan_level(_slice_num, PWM_CHAN_A, PWM_slice_data[_slice_num].channelA_div);
+          }
+        }
+        else
+        {
+          PWM_LOGERROR1("Error, not correct PWM pin = ", _pin);
+          
+          return false;
+        }
+        
+        pwm_set_enabled(_slice_num, true);
+          
+        PWM_LOGDEBUG3("pin = ", _pin, ", PWM_CHAN =", pwm_gpio_to_channel(_pin));
+        
+        ////////////////////////////////
         
         _enabled = true;
         
-        PWM_LOGDEBUG1("PWM enabled, frequency =", _frequency);
+        PWM_LOGDEBUG3("PWM enabled, slice = ", _slice_num, ", _frequency = ", _frequency);
       }
     
       return true;
@@ -194,7 +269,7 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
 
-  bool setPWM_Period(uint8_t pin, double period_us, double dutycycle, bool phaseCorrect = false)
+  bool setPWM_Period(uint8_t pin, float period_us, float dutycycle, bool phaseCorrect = false)
   {
     return setPWM(pin, 1000000.0f / period_us, dutycycle, phaseCorrect);
   }
@@ -231,7 +306,7 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
-  double getActualFreq()
+  float getActualFreq()
   {
     return _actualFrequency;
   }
@@ -252,9 +327,9 @@ class RP2040_PWM
   uint8_t     _slice_num;
   pwm_config  _PWM_config;
   
-  double      _actualFrequency;
-  double      _frequency;
-  double      _dutycycle;
+  float       _actualFrequency;
+  float       _frequency;
+  float       _dutycycle;
   bool        _phaseCorrect;
   
   bool        _enabled;
@@ -266,7 +341,7 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
-  bool calc_TOP_and_DIV(double freq)
+  bool calc_TOP_and_DIV(float freq)
   {           
     if (freq >= 2000.0)
     {
