@@ -35,7 +35,7 @@
   * [ 1. PWM_Multi](examples/PWM_Multi)
   * [ 2. PWM_DynamicFreq](examples/PWM_DynamicFreq)
   * [ 3. PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
-  * [ 4. PWM_MultiChannel](examples/PWM_MultiChannel)
+  * [ 4. PWM_MultiChannel](examples/PWM_MultiChannel) **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
