@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.1.0
+  Version: 1.1.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -23,6 +23,7 @@
   1.0.4   K Hoang      22/10/2021 Fix platform in library.json for PIO
   1.0.5   K Hoang      06/01/2022 Permit changing dutyCycle and keep same frequency on-the-fly
   1.1.0   K Hoang      24/02/2022 Permit PWM output for both channels of PWM slice. Use float instead of double
+  1.1.1   K Hoang      06/03/2022 Fix compiler warnings. Display informational warning when debug level > 3
  *****************************************************************************************************************************/
 
 #pragma once

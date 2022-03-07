@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.1.1](#Releases-v111)
   * [Releases v1.1.0](#Releases-v110)
   * [Releases v1.0.5](#Releases-v105)
   * [Releases v1.0.4](#Releases-v104)
@@ -24,6 +25,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.1.1
+
+1. Fix compiler warnings.
+2. Display informational warning when `_PWM_LOGLEVEL_` > 3
 
 ### Releases v1.1.0
 

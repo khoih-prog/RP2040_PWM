@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.1.0
+  Version: 1.1.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -23,6 +23,7 @@
   1.0.4   K Hoang      22/10/2021 Fix platform in library.json for PIO
   1.0.5   K Hoang      06/01/2022 Permit changing dutyCycle and keep same frequency on-the-fly
   1.1.0   K Hoang      24/02/2022 Permit PWM output for both channels of PWM slice. Use float instead of double
+  1.1.1   K Hoang      06/03/2022 Fix compiler warnings. Display informational warning when debug level > 3
 *****************************************************************************************************************************/
 
 #pragma once
@@ -62,13 +63,13 @@
 #endif
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION           "RP2040_PWM v1.1.0"
+  #define RP2040_PWM_VERSION           "RP2040_PWM v1.1.1"
   
   #define RP2040_PWM_VERSION_MAJOR     1
   #define RP2040_PWM_VERSION_MINOR     1
-  #define RP2040_PWM_VERSION_PATCH     0
+  #define RP2040_PWM_VERSION_PATCH     1
 
-  #define RP2040_PWM_VERSION_INT       1001000
+  #define RP2040_PWM_VERSION_INT       1001001
 #endif
 
 #include <math.h>
@@ -98,14 +99,14 @@ typedef struct
  
 static PWM_slice PWM_slice_data[NUM_PWM_SLICES] =
 {
-  { 0, 0, 0, false },
-  { 0, 0, 0, false },
-  { 0, 0, 0, false },
-  { 0, 0, 0, false },
-  { 0, 0, 0, false },
-  { 0, 0, 0, false },
-  { 0, 0, 0, false },
-  { 0, 0, 0, false }
+  { 0, 0, 0, false, false },
+  { 0, 0, 0, false, false },
+  { 0, 0, 0, false, false },
+  { 0, 0, 0, false, false },
+  { 0, 0, 0, false, false },
+  { 0, 0, 0, false, false },
+  { 0, 0, 0, false, false },
+  { 0, 0, 0, false, false }
 };
 ///////////////////////
 
@@ -178,7 +179,7 @@ class RP2040_PWM
           
           newFreq     = true;
           
-          PWM_LOGDEBUG3("Changing PWM frequency to", frequency, "and dutyCycle =", _dutycycle);
+          PWM_LOGINFO3("Changing PWM frequency to", frequency, "and dutyCycle =", _dutycycle);
         }
       }
       else if (_enabled)
@@ -189,12 +190,12 @@ class RP2040_PWM
           
           newDutyCycle     = true;
           
-          PWM_LOGDEBUG3("Changing PWM DutyCycle to", _dutycycle, "and keeping frequency =", _frequency);
+          PWM_LOGINFO3("Changing PWM DutyCycle to", _dutycycle, "and keeping frequency =", _frequency);
 
         }
         else
         {
-          PWM_LOGDEBUG3("No change, same PWM frequency =", frequency, "and dutyCycle =", _dutycycle);
+          PWM_LOGINFO3("No change, same PWM frequency =", frequency, "and dutyCycle =", _dutycycle);
         }
       }
       
@@ -252,13 +253,13 @@ class RP2040_PWM
         
         pwm_set_enabled(_slice_num, true);
           
-        PWM_LOGDEBUG3("pin = ", _pin, ", PWM_CHAN =", pwm_gpio_to_channel(_pin));
+        PWM_LOGINFO3("pin = ", _pin, ", PWM_CHAN =", pwm_gpio_to_channel(_pin));
         
         ////////////////////////////////
         
         _enabled = true;
         
-        PWM_LOGDEBUG3("PWM enabled, slice = ", _slice_num, ", _frequency = ", _frequency);
+        PWM_LOGINFO3("PWM enabled, slice = ", _slice_num, ", _frequency = ", _frequency);
       }
     
       return true;
@@ -375,7 +376,7 @@ class RP2040_PWM
     
     _actualFrequency = ( freq_CPU  ) / ( (_PWM_config.top + 1) * _PWM_config.div );
     
-    PWM_LOGDEBUG3("_PWM_config.top =", _PWM_config.top, ", _actualFrequency =", _actualFrequency);
+    PWM_LOGINFO3("_PWM_config.top =", _PWM_config.top, ", _actualFrequency =", _actualFrequency);
     
     return true; 
   }

@@ -110,7 +110,7 @@ Functions using normal software-based PWMs, relying on loop() and calling millis
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://www.arduino.cc/en/Main/Software)
  2. [`ArduinoCore-mbed mbed_nano or mbed_rp2040 core 2.7.2`](https://github.com/arduino/ArduinoCore-mbed) for Arduino **NANO_RP2040_CONNECT, RASPBERRY_PI_PICO** boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
- 3. [`Earle Philhower's arduino-pico core v1.12.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+ 3. [`Earle Philhower's arduino-pico core v1.13.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
  
  
 ---
@@ -249,7 +249,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.1.0
+RP2040_PWM v1.1.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -272,7 +272,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.1.0
+RP2040_PWM v1.1.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -295,7 +295,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.1.0
+RP2040_PWM v1.1.1
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -340,7 +340,7 @@ The following is the sample terminal output when running example [**PWM_DynamicD
 
 ```
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
-RP2040_PWM v1.1.0
+RP2040_PWM v1.1.1
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -377,7 +377,7 @@ The following is the sample terminal output when running example [**PWM_MultiCha
 
 ```
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
-RP2040_PWM v1.1.0
+RP2040_PWM v1.1.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
