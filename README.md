@@ -45,6 +45,7 @@
   * [3. PWM_DynamicFreq on Nano RP2040 Connect](#3-PWM_DynamicFreq-on-Nano-RP2040-Connect)
   * [4. PWM_DynamicDutyCycle on RASPBERRY_PI_PICO](#4-PWM_DynamicDutyCycle-on-RASPBERRY_PI_PICO)
   * [5. PWM_MultiChannel on RASPBERRY_PI_PICO](#5-PWM_MultiChannel-on-RASPBERRY_PI_PICO)
+  * [6. PWM_Waveform on RASPBERRY_PI_PICO](#6-PWM_Waveform-on-RASPBERRY_PI_PICO)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -507,9 +508,11 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 1. Thanks to [americodias](https://github.com/americodias) to report bugs in 
 - [Wrong frequency #1](https://github.com/khoih-prog/RP2040_PWM/issues/1) leading to v1.0.1
 - [Change the PWM frequency #2](https://github.com/khoih-prog/RP2040_PWM/issues/2) leading to v1.0.2
+
 2. Thanks to [Austin K. Litman](https://github.com/AKLitman) to report bugs in 
 - [Attempting to Alter the Duty Cycle w/o changing any other values #3](https://github.com/khoih-prog/RP2040_PWM/issues/3) leading to v1.0.5
 - [Request for Clarification on PWM Slices and A/B sides #5](https://github.com/khoih-prog/RP2040_PWM/issues/5) leading to v1.1.0
+
 3. Thanks to [Joerg Starkmuth](https://github.com/Laserjones) to propose enhancement in 
 - [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6) leading to v1.2.0
 
