@@ -14,6 +14,7 @@ PWM_slice KEYWORD1
 ###################################
 
 setPWM	KEYWORD2
+setPWM_manual	KEYWORD2
 setPWM_Period	KEYWORD2
 enablePWM	KEYWORD2
 disablePWM	KEYWORD2

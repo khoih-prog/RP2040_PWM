@@ -31,11 +31,13 @@
   * [1. Create PWM Instance with Pin, Frequency and dutycycle](#1-Create-PWM-Instance-with-Pin-Frequency-and-dutycycle)
   * [2. Initialize PWM Instance](#2-Initialize-PWM-Instance)
   * [3. Set or change PWM frequency or dutyCycle](#3-set-or-change-PWM-frequency-or-dutyCycle)
+  * [4. Set or change PWM frequency and dutyCycle manually and efficiently in waveform creation](#4-Set-or-change-PWM-frequency-and-dutyCycle-manually-and-efficiently-in-waveform-creation)
 * [Examples](#examples)
   * [ 1. PWM_Multi](examples/PWM_Multi)
   * [ 2. PWM_DynamicFreq](examples/PWM_DynamicFreq)
   * [ 3. PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
-  * [ 4. PWM_MultiChannel](examples/PWM_MultiChannel) **New**
+  * [ 4. PWM_MultiChannel](examples/PWM_MultiChannel)
+  * [ 5. PWM_Waveform](examples/PWM_Waveform) **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
@@ -109,8 +111,8 @@ Functions using normal software-based PWMs, relying on loop() and calling millis
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://www.arduino.cc/en/Main/Software)
- 2. [`ArduinoCore-mbed mbed_nano or mbed_rp2040 core 2.7.2`](https://github.com/arduino/ArduinoCore-mbed) for Arduino **NANO_RP2040_CONNECT, RASPBERRY_PI_PICO** boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
- 3. [`Earle Philhower's arduino-pico core v1.13.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+ 2. [`ArduinoCore-mbed mbed_nano or mbed_rp2040 core 3.0.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino **NANO_RP2040_CONNECT, RASPBERRY_PI_PICO** boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+ 3. [`Earle Philhower's arduino-pico core v1.13.1+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
  
  
 ---
@@ -219,6 +221,13 @@ if (PWM_Instance)
 PWM_Instance->setPWM(PWM_Pins, new_frequency, new_dutyCycle, true);
 ```
 
+#### 4. Set or change PWM frequency and dutyCycle manually and efficiently in waveform creation
+
+```
+PWM_Instance->setPWM_manual(PWM_Pins, new_top, new_div, new_level, true)
+```
+
+
 ---
 ---
 
@@ -226,8 +235,10 @@ PWM_Instance->setPWM(PWM_Pins, new_frequency, new_dutyCycle, true);
 
  1. [PWM_Multi](examples/PWM_Multi)
  2. [PWM_DynamicFreq](examples/PWM_DynamicFreq)
- 3. [PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle).
- 4. [PWM_MultiChannel](examples/PWM_MultiChannel). **New**
+ 3. [PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
+ 4. [PWM_MultiChannel](examples/PWM_MultiChannel)
+ 5. [PWM_Waveform](examples/PWM_Waveform). **New**
+ 
  
 ---
 ---
@@ -249,7 +260,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.1.1
+RP2040_PWM v1.2.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -272,7 +283,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.1.1
+RP2040_PWM v1.2.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -295,7 +306,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.1.1
+RP2040_PWM v1.2.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -340,7 +351,7 @@ The following is the sample terminal output when running example [**PWM_DynamicD
 
 ```
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
-RP2040_PWM v1.1.1
+RP2040_PWM v1.2.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -377,13 +388,62 @@ The following is the sample terminal output when running example [**PWM_MultiCha
 
 ```
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
-RP2040_PWM v1.1.1
+RP2040_PWM v1.2.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
 0	10	1000.00		10.00		1000.00
 1	11	1000.00		50.00		1000.00
 =============================================================
+```
+
+---
+
+### 6. PWM_Waveform on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [**PWM_Waveform**](examples/PWM_Waveform) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
+
+
+```
+Starting PWM_Waveform on RASPBERRY_PI_PICO
+RP2040_PWM v1.2.0
+[PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+=============================================================
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+...
 ```
 
 ---
@@ -427,13 +487,15 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
 
 ## DONE
 
-1. Basic hardware-based multi-channel PWMs for **RP2040-based boards** such as Nano_RP2040_Connect, RASPBERRY_PI_PICO, etc. using either RP2040 [**ArduinoCore-mbed mbed_nano or mbed_rp2040** core](https://github.com/arduino/ArduinoCore-mbed) or [**Earle Philhower's arduino-pico core**](https://github.com/earlephilhower/arduino-pico)
-2. Add Table of Contents
-3. Split `changelog.md`
-4. Permit PWM output for both channels of PWM slice.
-5. Use float `instead` of `double` for frequency and duty-cycle
-6. Add example [PWM_MultiChannel](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_MultiChannel) to demonstrate how to use both channels of PWM slice.
-
+ 1. Basic hardware-based multi-channel PWMs for **RP2040-based boards** such as Nano_RP2040_Connect, RASPBERRY_PI_PICO, etc. using either RP2040 [**ArduinoCore-mbed mbed_nano or mbed_rp2040** core](https://github.com/arduino/ArduinoCore-mbed) or [**Earle Philhower's arduino-pico core**](https://github.com/earlephilhower/arduino-pico)
+ 2. Add Table of Contents
+ 3. Split `changelog.md`
+ 4. Permit PWM output for both channels of PWM slice.
+ 5. Use float `instead` of `double` for frequency and duty-cycle
+ 6. Add example [PWM_MultiChannel](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_MultiChannel) to demonstrate how to use both channels of PWM slice.
+ 7. Add efficient `setPWM_manual()` function to use in wafeform creation using PWM
+ 8. Add example [PWM_Waveform](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform) to demonstrate how to use new `setPWM_manual()` function in wafeform creation
+ 9. Optimize library code and examples by using **reference-passing instead of value-passing**.
 
 ---
 ---
@@ -445,17 +507,17 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 1. Thanks to [americodias](https://github.com/americodias) to report bugs in 
 - [Wrong frequency #1](https://github.com/khoih-prog/RP2040_PWM/issues/1) leading to v1.0.1
 - [Change the PWM frequency #2](https://github.com/khoih-prog/RP2040_PWM/issues/2) leading to v1.0.2
-
 2. Thanks to [Austin K. Litman](https://github.com/AKLitman) to report bugs in 
 - [Attempting to Alter the Duty Cycle w/o changing any other values #3](https://github.com/khoih-prog/RP2040_PWM/issues/3) leading to v1.0.5
 - [Request for Clarification on PWM Slices and A/B sides #5](https://github.com/khoih-prog/RP2040_PWM/issues/5) leading to v1.1.0
-
-
+3. Thanks to [Joerg Starkmuth](https://github.com/Laserjones) to propose enhancement in 
+- [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6) leading to v1.2.0
 
 <table>
   <tr>
     <td align="center"><a href="https://github.com/americodias"><img src="https://github.com/americodias.png" width="100px;" alt="americodias"/><br /><sub><b>⭐️ Américo Dias</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/AKLitman"><img src="https://github.com/AKLitman.png" width="100px;" alt="AKLitman"/><br /><sub><b>⭐️ Austin K. Litman</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Laserjones"><img src="https://github.com/Laserjones.png" width="100px;" alt="Laserjones"/><br /><sub><b>Joerg Starkmuth</b></sub></a><br /></td>
   </tr>
 </table>
   

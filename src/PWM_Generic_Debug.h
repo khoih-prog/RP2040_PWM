@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.1.1
+  Version: 1.2.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -24,6 +24,7 @@
   1.0.5   K Hoang      06/01/2022 Permit changing dutyCycle and keep same frequency on-the-fly
   1.1.0   K Hoang      24/02/2022 Permit PWM output for both channels of PWM slice. Use float instead of double
   1.1.1   K Hoang      06/03/2022 Fix compiler warnings. Display informational warning when debug level > 3
+  1.2.0   K Hoang      16/04/2022 Add manual setPWM function to use in wafeform creation
  *****************************************************************************************************************************/
 
 #pragma once
@@ -71,7 +72,7 @@ const char PWM_SP[]   = " ";
 #define PWM_LOGERROR2(x,y,z)    if(_PWM_LOGLEVEL_>0) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINTLN(z); }
 #define PWM_LOGERROR3(x,y,z,w)  if(_PWM_LOGLEVEL_>0) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINTLN(w); }
 #define PWM_LOGERROR5(x,y,z,w,xx,yy) if(_PWM_LOGLEVEL_>0) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINTLN(yy); }
-#define PWM_LOGERROR7(x,y,z,w,xx,yy,zz,ww) if(_PWM_LOGLEVEL_>0) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINT(yy); PWM_PRINT_SP; PWM_PRINT(zz); PWM_PRINTLN(ww); }
+#define PWM_LOGERROR7(x,y,z,w,xx,yy,zz,ww) if(_PWM_LOGLEVEL_>0) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINT(yy); PWM_PRINT_SP; PWM_PRINT(zz); PWM_PRINT_SP; PWM_PRINTLN(ww); }
 
 //////////////////////////////////////////
 
@@ -93,7 +94,7 @@ const char PWM_SP[]   = " ";
 #define PWM_LOGINFO2(x,y,z)     if(_PWM_LOGLEVEL_>2) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINTLN(z); }
 #define PWM_LOGINFO3(x,y,z,w)   if(_PWM_LOGLEVEL_>2) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINTLN(w); }
 #define PWM_LOGINFO5(x,y,z,w,xx,yy) if(_PWM_LOGLEVEL_>2) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINTLN(yy); }
-#define PWM_LOGINFO7(x,y,z,w,xx,yy,zz,ww) if(_PWM_LOGLEVEL_>2) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINT(yy); PWM_PRINT_SP; PWM_PRINT(zz); PWM_PRINTLN(ww); }
+#define PWM_LOGINFO7(x,y,z,w,xx,yy,zz,ww) if(_PWM_LOGLEVEL_>2) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINT(yy); PWM_PRINT_SP; PWM_PRINT(zz); PWM_PRINT_SP; PWM_PRINTLN(ww); }
 
 //////////////////////////////////////////
 
@@ -104,7 +105,7 @@ const char PWM_SP[]   = " ";
 #define PWM_LOGDEBUG2(x,y,z)    if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINTLN(z); }
 #define PWM_LOGDEBUG3(x,y,z,w)  if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINTLN(w); }
 #define PWM_LOGDEBUG5(x,y,z,w,xx,yy) if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINTLN(yy); }
-#define PWM_LOGDEBUG7(x,y,z,w,xx,yy,zz,ww) if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINT(yy); PWM_PRINT_SP; PWM_PRINT(zz); PWM_PRINTLN(ww); }
+#define PWM_LOGDEBUG7(x,y,z,w,xx,yy,zz,ww) if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINT(yy); PWM_PRINT_SP; PWM_PRINT(zz); PWM_PRINT_SP; PWM_PRINTLN(ww); }
 //////////////////////////////////////////
 
 

@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.2.0](#Releases-v120)
   * [Releases v1.1.1](#Releases-v111)
   * [Releases v1.1.0](#Releases-v110)
   * [Releases v1.0.5](#Releases-v105)
@@ -25,6 +26,12 @@
 ---
 
 ## Changelog
+
+### Releases v1.2.0
+
+1. Add efficient `setPWM_manual()` function to use in wafeform creation using PWM. Check [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6)
+2. Add example [PWM_Waveform](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform) to demonstrate how to use new `setPWM_manual()` function in wafeform creation
+3. Optimize library code and examples by using **reference-passing instead of value-passing**.
 
 ### Releases v1.1.1
 

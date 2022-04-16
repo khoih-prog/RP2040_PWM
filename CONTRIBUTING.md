@@ -15,7 +15,7 @@ If you don't find anything, please [open a new issue](https://github.com/khoih-p
 Please ensure to specify the following:
 
 * Arduino IDE version (e.g. 1.8.19) or Platform.io version
-* `RP2040` Core Version (e.g. Arduino-mbed RP2040 v2.7.2 or arduino-pico core v1.13.0)
+* `RP2040` Core Version (e.g. Arduino-mbed RP2040 v3.0.1 or arduino-pico core v1.13.1)
 * `RP2040` Board type (e.g. NANO_RP2040_CONNECT, RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040, GENERIC_RP2040, etc.)
 * Contextual information (e.g. what you were trying to achieve)
 * Simplest possible steps to reproduce
@@ -28,10 +28,10 @@ Please ensure to specify the following:
 
 ```
 Arduino IDE version: 1.8.19
-Arduino-mbed mbed_nano v2.7.2
+Arduino-mbed mbed_nano v3.0.1
 NANO_RP2040_CONNECT Module
 OS: Ubuntu 21.04 LTS
-Linux kh-Inspiron-3593 5.13.0-30-generic #33-Ubuntu SMP Fri Feb 4 17:03:31 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+Linux kh-Inspiron-3593 5.13.0-39-generic #44~20.04.1-Ubuntu SMP Thu Mar 24 16:43:35 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
 
 Context:
 I encountered a crash while using TimerInterrupt.
