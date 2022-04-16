@@ -445,7 +445,7 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
-  bool calc_TOP_and_DIV(float freq)
+  bool calc_TOP_and_DIV(const float& freq)
   {           
     if (freq >= 2000.0)
     {
