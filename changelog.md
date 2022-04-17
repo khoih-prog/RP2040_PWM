@@ -27,11 +27,19 @@
 
 ## Changelog
 
+### Releases v1.3.0
+
+1. Add `setPWM_manual(pin, level)` function for efficiency in wafeform creation using PWM. Check [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6)
+2. Add example [PWM_Waveform_Fast](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform_Fast) to demonstrate how to use new `setPWM_manual(pin, level)` function.
+3. Add `setPWM_Int()` function for optional `uint32_t dutycycle = real_dutycycle * 1000`. Check [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6)
+4. Add example [PWM_DynamicDutyCycle_Int](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle_Int) to demonstrate how to use new `setPWM_Int()` function.
+5. Rewrite many functions to take advantage of new features.
+
 ### Releases v1.2.0
 
 1. Add efficient `setPWM_manual()` function to use in wafeform creation using PWM. Check [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6)
 2. Add example [PWM_Waveform](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform) to demonstrate how to use new `setPWM_manual()` function in wafeform creation
-3. Optimize library code and examples by using **reference-passing instead of value-passing**.
+3. Optimize library code and examples by using **reference-passing instead of value-passing** and **inline**.
 
 ### Releases v1.1.1
 

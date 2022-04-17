@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.2.0
+  Version: 1.3.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,6 +25,7 @@
   1.1.0   K Hoang      24/02/2022 Permit PWM output for both channels of PWM slice. Use float instead of double
   1.1.1   K Hoang      06/03/2022 Fix compiler warnings. Display informational warning when debug level > 3
   1.2.0   K Hoang      16/04/2022 Add manual setPWM function to use in wafeform creation
+  1.3.0   K Hoang      16/04/2022 Add setPWM_Int function for optional uint32_t dutycycle = real_dutycycle * 1000
  *****************************************************************************************************************************/
 
 #pragma once

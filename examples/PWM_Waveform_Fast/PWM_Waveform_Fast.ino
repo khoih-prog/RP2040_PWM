@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  PWM_Waveform.ino
+  PWM_Waveform_Fast.ino
   For RP2040 boards
   Written by Khoi Hoang
 
@@ -99,7 +99,7 @@ void setup()
   
   delay(100);
 
-  Serial.print(F("\nStarting PWM_Waveform on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStarting PWM_Waveform_Fast on ")); Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
 
   frequency = 1000;
@@ -131,7 +131,7 @@ void loop()
 {
   for (int index = 0; index < NUM_PWM_POINTS; index++)
   {
-    PWM_Instance->setPWM_manual(pinToUse, PWM_data[index].top, PWM_data[index].div, PWM_data[index].level, true);
+    PWM_Instance->setPWM_manual(pinToUse, PWM_data[index].level);
 
     // Use at low freq to check
     //printPWMInfo(PWM_Instance);

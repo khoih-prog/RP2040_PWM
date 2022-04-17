@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.2.0
+  Version: 1.3.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,6 +25,7 @@
   1.1.0   K Hoang      24/02/2022 Permit PWM output for both channels of PWM slice. Use float instead of double
   1.1.1   K Hoang      06/03/2022 Fix compiler warnings. Display informational warning when debug level > 3
   1.2.0   K Hoang      16/04/2022 Add manual setPWM function to use in wafeform creation
+  1.3.0   K Hoang      16/04/2022 Add setPWM_Int function for optional uint32_t dutycycle = real_dutycycle * 1000
 *****************************************************************************************************************************/
 
 #pragma once
@@ -64,13 +65,13 @@
 #endif
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION           "RP2040_PWM v1.2.0"
+  #define RP2040_PWM_VERSION           "RP2040_PWM v1.3.0"
   
   #define RP2040_PWM_VERSION_MAJOR     1
-  #define RP2040_PWM_VERSION_MINOR     2
+  #define RP2040_PWM_VERSION_MINOR     3
   #define RP2040_PWM_VERSION_PATCH     0
 
-  #define RP2040_PWM_VERSION_INT       1002000
+  #define RP2040_PWM_VERSION_INT       1003000
 #endif
 
 #include <math.h>
@@ -117,19 +118,20 @@ typedef struct
   uint16_t channelB_div;
   bool  channelA_Active;
   bool  channelB_Active;
+  bool  initialized;
 } PWM_slice_manual;
 
 // Default to 0% PWM
 static PWM_slice_manual PWM_slice_manual_data[NUM_PWM_SLICES] =
 {
-  { 0, 0, false, false },
-  { 0, 0, false, false },
-  { 0, 0, false, false },
-  { 0, 0, false, false },
-  { 0, 0, false, false },
-  { 0, 0, false, false },
-  { 0, 0, false, false },
-  { 0, 0, false, false }
+  { 0, 0, false, false, false },
+  { 0, 0, false, false, false },
+  { 0, 0, false, false, false },
+  { 0, 0, false, false, false },
+  { 0, 0, false, false, false },
+  { 0, 0, false, false, false },
+  { 0, 0, false, false, false },
+  { 0, 0, false, false, false }
 };
 ///////////////////////
 
@@ -149,7 +151,7 @@ class RP2040_PWM
 
     _pin          = pin;
     _frequency    = frequency;
-    _dutycycle    = dutycycle;
+    _dutycycle    = dutycycle * 1000;
     
     _phaseCorrect = phaseCorrect;
      
@@ -161,11 +163,7 @@ class RP2040_PWM
     {
       _frequency    = frequency;
     }
-          
-    _pin          = pin;    
-    _dutycycle    = dutycycle;    
-    _phaseCorrect = phaseCorrect;
-    
+             
     _enabled      = false;
   }
   
@@ -177,43 +175,36 @@ class RP2040_PWM
   
   bool setPWM()
   {
-    return setPWM(_pin, _frequency, _dutycycle, _phaseCorrect);
+    return setPWM_Int(_pin, _frequency, _dutycycle, _phaseCorrect);
   }
   
   ///////////////////////////////////////////
   
-  bool setPWM_manual(const uint8_t& pin, const uint16_t& top, const uint8_t& div, 
-                     uint16_t& level, bool phaseCorrect = false)
-  {   
+  // To be called only after previous complete setPWM_manual with top and div params
+  // by checking PWM_slice_manual_data[_slice_num].initialized == true;
+  bool setPWM_manual(const uint8_t& pin, uint16_t& level)
+  {         
     _pin = pin;
     
-    _PWM_config.top = top;
-    _PWM_config.div = div;
-
-    // Limit level <= top
-    if (level > top)
-      level = top;
+    // Limit level <= _PWM_config.top
+    if (level > _PWM_config.top)
+      level = _PWM_config.top;
     
     gpio_set_function(_pin, GPIO_FUNC_PWM);
     
     _slice_num = pwm_gpio_to_slice_num(_pin);
     
-    pwm_config config = pwm_get_default_config();
-           
-    // Set phaseCorrect
-    pwm_set_phase_correct(_slice_num, phaseCorrect);
-       
-    pwm_config_set_clkdiv_int(&config, _PWM_config.div);
-    pwm_config_set_wrap(&config, _PWM_config.top);
+    if (!PWM_slice_manual_data[_slice_num].initialized)
+    {
+      PWM_LOGERROR1("Error, not initialized for PWM pin = ", _pin);
+      
+      return false;
+    }
     
-    // auto start running once configured
-    pwm_init(_slice_num, &config, true);
     pwm_set_gpio_level(_pin, level);
            
     // From v1.1.0
     ////////////////////////////////
-    // Update PWM_slice_manual_data[]
-    //PWM_slice_manual_data[_slice_num].freq = _frequency;
     
     if ( (pwm_gpio_to_channel(_pin)) == PWM_CHAN_A)
     {
@@ -260,14 +251,96 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
-  bool setPWM(const uint8_t& pin, const float& frequency, const float& dutycycle, bool phaseCorrect = false)
+  bool setPWM_manual(const uint8_t& pin, const uint16_t& top, const uint8_t& div, 
+                     uint16_t& level, bool phaseCorrect = false)
+  {   
+    _pin = pin;
+    
+    _PWM_config.top = top;
+    _PWM_config.div = div;
+
+    // Limit level <= top
+    if (level > top)
+      level = top;
+    
+    gpio_set_function(_pin, GPIO_FUNC_PWM);
+    
+    _slice_num = pwm_gpio_to_slice_num(_pin);
+    
+    pwm_config config = pwm_get_default_config();
+           
+    // Set phaseCorrect
+    pwm_set_phase_correct(_slice_num, phaseCorrect);
+       
+    pwm_config_set_clkdiv_int(&config, _PWM_config.div);
+    pwm_config_set_wrap(&config, _PWM_config.top);
+    
+    // auto start running once configured
+    pwm_init(_slice_num, &config, true);
+    pwm_set_gpio_level(_pin, level);
+    
+    // Store and flag so that simpler setPWM_manual() can be called without top and div
+    PWM_slice_manual_data[_slice_num].initialized = true;
+           
+    // From v1.1.0
+    ////////////////////////////////
+    // Update PWM_slice_manual_data[]
+    
+    if ( (pwm_gpio_to_channel(_pin)) == PWM_CHAN_A)
+    {
+      PWM_slice_manual_data[_slice_num].channelA_div    = level;
+      PWM_slice_manual_data[_slice_num].channelA_Active = true;
+      
+      // If B is active, set the data now
+      if (PWM_slice_manual_data[_slice_num].channelB_Active)
+      {
+        pwm_set_chan_level(_slice_num, PWM_CHAN_B, PWM_slice_manual_data[_slice_num].channelB_div);
+      }
+    }
+    else if ( (pwm_gpio_to_channel(_pin)) == PWM_CHAN_B)
+    {
+      PWM_slice_manual_data[_slice_num].channelB_div     = level;
+      PWM_slice_manual_data[_slice_num].channelB_Active  = true;
+      
+      // If A is active, set the data now
+      if (PWM_slice_manual_data[_slice_num].channelA_Active)
+      {
+        pwm_set_chan_level(_slice_num, PWM_CHAN_A, PWM_slice_manual_data[_slice_num].channelA_div);
+      }
+    }
+    else
+    {
+      PWM_LOGERROR1("Error, not correct PWM pin = ", _pin);
+      
+      return false;
+    }
+    
+    pwm_set_enabled(_slice_num, true);
+      
+    PWM_LOGINFO3("pin = ", _pin, ", PWM_CHAN =", pwm_gpio_to_channel(_pin));
+    
+    ////////////////////////////////
+    
+    _enabled = true;
+    
+    PWM_LOGINFO7("PWM enabled, slice =", _slice_num, ", top =", _PWM_config.top,
+                 ", div =", _PWM_config.div, ", level =", level);
+
+    return true;  
+  }
+  
+  ///////////////////////////////////////////
+  
+  // dutycycle from 0-100,000 for 0%-100% to make use of 16-bit top register
+  // dutycycle = real_dutycycle * 1000 for better accuracy
+  bool setPWM_Int(const uint8_t& pin, const float& frequency, const uint32_t& dutycycle, bool phaseCorrect = false)
   {
     bool newFreq      = false;
     bool newDutyCycle = false;
     
     if ( (frequency <= MAX_PWM_FREQUENCY) && (frequency >= MIN_PWM_FREQUENCY) )
     {   
-      _pin        = pin;
+      _pin = pin;
       
       if (_frequency != frequency)
       {
@@ -282,23 +355,22 @@ class RP2040_PWM
           
           newFreq     = true;
           
-          PWM_LOGINFO3("Changing PWM frequency to", frequency, "and dutyCycle =", _dutycycle);
+          PWM_LOGINFO3("Changing PWM frequency to", frequency, "and dutyCycle =", (float) _dutycycle / 1000);
         }
       }
       else if (_enabled)
       {
         if (_dutycycle != dutycycle)
         {
-          _dutycycle  = dutycycle;
+          _dutycycle   = dutycycle;         
+          newDutyCycle = true;
           
-          newDutyCycle     = true;
-          
-          PWM_LOGINFO3("Changing PWM DutyCycle to", _dutycycle, "and keeping frequency =", _frequency);
+          PWM_LOGINFO3("Changing PWM DutyCycle to", (float) _dutycycle / 1000, "and keeping frequency =", _frequency);
 
         }
         else
         {
-          PWM_LOGINFO3("No change, same PWM frequency =", frequency, "and dutyCycle =", _dutycycle);
+          PWM_LOGINFO3("No change, same PWM frequency =", frequency, "and dutyCycle =", (float) _dutycycle / 1000);
         }
       }
       
@@ -318,7 +390,9 @@ class RP2040_PWM
         
         // auto start running once configured
         pwm_init(_slice_num, &config, true);
-        pwm_set_gpio_level(_pin, ( _PWM_config.top * _dutycycle ) / 100 );
+        
+        // To avoid uint32_t overflow and still keep accuracy as _dutycycle max = 100,000 > 65536 of uint16_t
+        pwm_set_gpio_level(_pin, ( _PWM_config.top * (_dutycycle / 2) ) / 50000 );
                
         // From v1.1.0
         ////////////////////////////////
@@ -327,7 +401,7 @@ class RP2040_PWM
         
         if ( (pwm_gpio_to_channel(_pin)) == PWM_CHAN_A)
         {
-          PWM_slice_data[_slice_num].channelA_div     = ( _PWM_config.top * _dutycycle ) / 100;
+          PWM_slice_data[_slice_num].channelA_div     = ( _PWM_config.top * (_dutycycle / 2) ) / 50000;
           PWM_slice_data[_slice_num].channelA_Active  = true;
           
           // If B is active, set the data now
@@ -338,7 +412,7 @@ class RP2040_PWM
         }
         else if ( (pwm_gpio_to_channel(_pin)) == PWM_CHAN_B)
         {
-          PWM_slice_data[_slice_num].channelB_div     = ( _PWM_config.top * _dutycycle ) / 100;
+          PWM_slice_data[_slice_num].channelB_div     = ( _PWM_config.top * (_dutycycle / 2) ) / 50000;
           PWM_slice_data[_slice_num].channelB_Active  = true;
           
           // If A is active, set the data now
@@ -372,10 +446,17 @@ class RP2040_PWM
   }
   
   ///////////////////////////////////////////
+  
+  bool setPWM(const uint8_t& pin, const float& frequency, const float& dutycycle, bool phaseCorrect = false)
+  {
+    return setPWM_Int(pin, frequency, dutycycle * 1000, phaseCorrect);
+  }
+  
+  ///////////////////////////////////////////
 
   bool setPWM_Period(const uint8_t& pin, const float& period_us, const float& dutycycle, bool phaseCorrect = false)
   {
-    return setPWM(pin, 1000000.0f / period_us, dutycycle, phaseCorrect);
+    return setPWM_Int(pin, 1000000.0f / period_us, dutycycle * 1000, phaseCorrect);
   }
   
   ///////////////////////////////////////////
@@ -426,16 +507,20 @@ class RP2040_PWM
   
   private:
   
-  uint32_t    freq_CPU;
-  uint8_t     _pin;
-  uint8_t     _slice_num;
   pwm_config  _PWM_config;
+  uint32_t    freq_CPU;
   
   float       _actualFrequency;
   float       _frequency;
-  float       _dutycycle;
-  bool        _phaseCorrect;
   
+  // dutycycle from 0-100,000 for 0%-100% to make use of 16-bit top register
+  // dutycycle = real_dutycycle * 1000 for better accuracy
+  uint32_t    _dutycycle;
+  //////////
+  
+  uint8_t     _pin;
+  uint8_t     _slice_num;  
+  bool        _phaseCorrect;
   bool        _enabled;
   
   ///////////////////////////////////////////

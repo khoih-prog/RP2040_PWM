@@ -38,6 +38,8 @@
   * [ 3. PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
   * [ 4. PWM_MultiChannel](examples/PWM_MultiChannel)
   * [ 5. PWM_Waveform](examples/PWM_Waveform) **New**
+  * [ 6. PWM_Waveform_Fast](examples/PWM_Waveform_Fast). **New**
+  * [ 7. PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int). **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
@@ -46,6 +48,7 @@
   * [4. PWM_DynamicDutyCycle on RASPBERRY_PI_PICO](#4-PWM_DynamicDutyCycle-on-RASPBERRY_PI_PICO)
   * [5. PWM_MultiChannel on RASPBERRY_PI_PICO](#5-PWM_MultiChannel-on-RASPBERRY_PI_PICO)
   * [6. PWM_Waveform on RASPBERRY_PI_PICO](#6-PWM_Waveform-on-RASPBERRY_PI_PICO)
+  * [7. PWM_Waveform_Fast on RASPBERRY_PI_PICO](#7-PWM_Waveform_Fast-on-RASPBERRY_PI_PICO)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -218,16 +221,52 @@ if (PWM_Instance)
 
 #### 3. Set or change PWM frequency or dutyCycle
 
+To use `float new_dutyCycle`
+
 ```
 PWM_Instance->setPWM(PWM_Pins, new_frequency, new_dutyCycle, true);
 ```
 
+such as 
+
+```
+dutyCycle = 10.0f;
+  
+Serial.print(F("Change PWM DutyCycle to ")); Serial.println(dutyCycle);
+PWM_Instance->setPWM(pinToUse, frequency, dutyCycle, true);
+```
+
+---
+
+To use `uint32_t new_dutyCycle` = `real_dutyCycle * 1000`
+
+```
+PWM_Instance->setPWM_Int(PWM_Pins, new_frequency, new_dutyCycle, true);
+```
+
+such as for `real_dutyCycle = 20%`
+
+```
+// dutyCycle = real_dutyCycle * 1000
+dutyCycle = 20000;
+  
+Serial.print(F("Change PWM DutyCycle to ")); Serial.println((float) dutyCycle / 1000);
+PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle, true);
+```
+
 #### 4. Set or change PWM frequency and dutyCycle manually and efficiently in waveform creation
 
+Need to call only once for each pin
+
 ```
-PWM_Instance->setPWM_manual(PWM_Pins, new_top, new_div, new_level, true)
+PWM_Instance->setPWM_manual(PWM_Pins, new_top, new_div, new_level, true);
 ```
 
+after that, if just changing `dutyCycle` / `level`, use 
+
+```
+PWM_Instance->setPWM_manual(PWM_Pins, new_level);
+```
 
 ---
 ---
@@ -239,6 +278,8 @@ PWM_Instance->setPWM_manual(PWM_Pins, new_top, new_div, new_level, true)
  3. [PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
  4. [PWM_MultiChannel](examples/PWM_MultiChannel)
  5. [PWM_Waveform](examples/PWM_Waveform). **New**
+ 6. [PWM_Waveform_Fast](examples/PWM_Waveform_Fast). **New**
+ 7. [PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int). **New**
  
  
 ---
@@ -261,7 +302,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.2.0
+RP2040_PWM v1.3.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -284,7 +325,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.2.0
+RP2040_PWM v1.3.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -307,7 +348,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.2.0
+RP2040_PWM v1.3.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -352,7 +393,7 @@ The following is the sample terminal output when running example [**PWM_DynamicD
 
 ```
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
-RP2040_PWM v1.2.0
+RP2040_PWM v1.3.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -389,7 +430,7 @@ The following is the sample terminal output when running example [**PWM_MultiCha
 
 ```
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
-RP2040_PWM v1.2.0
+RP2040_PWM v1.3.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -407,7 +448,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```
 Starting PWM_Waveform on RASPBERRY_PI_PICO
-RP2040_PWM v1.2.0
+RP2040_PWM v1.3.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -437,6 +478,30 @@ RP2040_PWM v1.2.0
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
 [PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
@@ -444,9 +509,164 @@ RP2040_PWM v1.2.0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
 ...
 ```
 
+---
+
+### 7. PWM_Waveform_Fast on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [**PWM_Waveform_Fast**](examples/PWM_Waveform_Fast) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
+
+
+```
+Starting PWM_Waveform_Fast on RASPBERRY_PI_PICO
+RP2040_PWM v1.3.0
+[PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+=============================================================
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 1000
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 900
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 800
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 700
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 600
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 500
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 400
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 300
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 200
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 100
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 50
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+[PWM] pin =  10 , PWM_CHAN = 0
+[PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
+...
+```
 ---
 ---
 
@@ -496,7 +716,12 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
  6. Add example [PWM_MultiChannel](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_MultiChannel) to demonstrate how to use both channels of PWM slice.
  7. Add efficient `setPWM_manual()` function to use in wafeform creation using PWM
  8. Add example [PWM_Waveform](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform) to demonstrate how to use new `setPWM_manual()` function in wafeform creation
- 9. Optimize library code and examples by using **reference-passing instead of value-passing**.
+ 9. Optimize library code and examples by using **reference-passing instead of value-passing** and **inline**.
+10. Add `setPWM_manual(pin, level)` function for efficiency in wafeform creation using PWM.
+11. Add example [PWM_Waveform_Fast](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform_Fast) to demonstrate how to use new `setPWM_manual(pin, level)` function.
+12. Add `setPWM_Int()` function for optional `uint32_t dutycycle = real_dutycycle * 1000`.
+13. Add example [PWM_DynamicDutyCycle_Int](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle_Int) to demonstrate how to use new `setPWM_Int()` function.
+
 
 ---
 ---
@@ -514,13 +739,13 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 - [Request for Clarification on PWM Slices and A/B sides #5](https://github.com/khoih-prog/RP2040_PWM/issues/5) leading to v1.1.0
 
 3. Thanks to [Joerg Starkmuth](https://github.com/Laserjones) to propose enhancement in 
-- [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6) leading to v1.2.0
+- [Duty cycle as integer rather than float #6](https://github.com/khoih-prog/RP2040_PWM/issues/6) leading to v1.2.0 and v1.3.0
 
 <table>
   <tr>
     <td align="center"><a href="https://github.com/americodias"><img src="https://github.com/americodias.png" width="100px;" alt="americodias"/><br /><sub><b>⭐️ Américo Dias</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/AKLitman"><img src="https://github.com/AKLitman.png" width="100px;" alt="AKLitman"/><br /><sub><b>⭐️ Austin K. Litman</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/Laserjones"><img src="https://github.com/Laserjones.png" width="100px;" alt="Laserjones"/><br /><sub><b>Joerg Starkmuth</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Laserjones"><img src="https://github.com/Laserjones.png" width="100px;" alt="Laserjones"/><br /><sub><b>⭐️ Joerg Starkmuth</b></sub></a><br /></td>
   </tr>
 </table>
   
