@@ -16,7 +16,7 @@
 #define _PWM_LOGLEVEL_        3
 #include "RP2040_PWM.h"
 
-//createcs pwm instance
+//creates pwm instance
 RP2040_PWM* PWM_Instance;
 
 float frequency;
