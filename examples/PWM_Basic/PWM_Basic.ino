@@ -16,21 +16,17 @@
 #define _PWM_LOGLEVEL_        3
 #include "RP2040_PWM.h"
 
-
-RP2040_PWM* PWM_Instance;
 //createcs pwm instance
+RP2040_PWM* PWM_Instance;
 
 float frequency;
 float dutyCycle;
 
-
 void setup()
 {
-  PWM_Instance = new RP2040_PWM(25, 20000, 0);
   //assigns pin 25 (built in LED), with frequency of 20 KHz and a duty cycle of 0%
+  PWM_Instance = new RP2040_PWM(25, 20000, 0);
 }
-
-
 
 void loop()
 {
