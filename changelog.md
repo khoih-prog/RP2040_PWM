@@ -12,6 +12,8 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.3.1](#Releases-v131)
+  * [Releases v1.3.0](#Releases-v130)
   * [Releases v1.2.0](#Releases-v120)
   * [Releases v1.1.1](#Releases-v111)
   * [Releases v1.1.0](#Releases-v110)
@@ -26,6 +28,10 @@
 ---
 
 ## Changelog
+
+### Releases v1.3.1
+
+1. Add `minimal` example [PWM_Basic](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Basic). Check [added minimal viable program to get the user up and running #9](https://github.com/khoih-prog/RP2040_PWM/pull/9)
 
 ### Releases v1.3.0
 

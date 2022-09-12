@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.3.0
+  Version: 1.3.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,6 +26,7 @@
   1.1.1   K Hoang      06/03/2022 Fix compiler warnings. Display informational warning when debug level > 3
   1.2.0   K Hoang      16/04/2022 Add manual setPWM function to use in wafeform creation
   1.3.0   K Hoang      16/04/2022 Add setPWM_Int function for optional uint32_t dutycycle = real_dutycycle * 1000
+  1.3.1   K Hoang      11/09/2022 Add minimal example `PWM_Basic`
 *****************************************************************************************************************************/
 
 #pragma once
@@ -65,13 +66,13 @@
 #endif
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION           "RP2040_PWM v1.3.0"
+  #define RP2040_PWM_VERSION           "RP2040_PWM v1.3.1"
   
   #define RP2040_PWM_VERSION_MAJOR     1
   #define RP2040_PWM_VERSION_MINOR     3
-  #define RP2040_PWM_VERSION_PATCH     0
+  #define RP2040_PWM_VERSION_PATCH     1
 
-  #define RP2040_PWM_VERSION_INT       1003000
+  #define RP2040_PWM_VERSION_INT       1003001
 #endif
 
 #include <math.h>

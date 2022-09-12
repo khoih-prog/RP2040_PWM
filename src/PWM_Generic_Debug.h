@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.3.0
+  Version: 1.3.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,6 +26,7 @@
   1.1.1   K Hoang      06/03/2022 Fix compiler warnings. Display informational warning when debug level > 3
   1.2.0   K Hoang      16/04/2022 Add manual setPWM function to use in wafeform creation
   1.3.0   K Hoang      16/04/2022 Add setPWM_Int function for optional uint32_t dutycycle = real_dutycycle * 1000
+  1.3.1   K Hoang      11/09/2022 Add minimal example `PWM_Basic`
  *****************************************************************************************************************************/
 
 #pragma once
@@ -50,7 +51,6 @@
   #define _PWM_LOGLEVEL_       1
 #endif
 
-
 //////////////////////////////////////////
 
 const char PWM_MARK[] = "[PWM] ";
@@ -61,8 +61,6 @@ const char PWM_SP[]   = " ";
 
 #define PWM_PRINT_MARK    PWM_PRINT(PWM_MARK)
 #define PWM_PRINT_SP      PWM_PRINT(PWM_SP)
-
-     
 
 //////////////////////////////////////////
 
@@ -107,6 +105,7 @@ const char PWM_SP[]   = " ";
 #define PWM_LOGDEBUG3(x,y,z,w)  if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINTLN(w); }
 #define PWM_LOGDEBUG5(x,y,z,w,xx,yy) if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINTLN(yy); }
 #define PWM_LOGDEBUG7(x,y,z,w,xx,yy,zz,ww) if(_PWM_LOGLEVEL_>3) { PWM_PRINT_MARK; PWM_PRINT(x); PWM_PRINT_SP; PWM_PRINT(y); PWM_PRINT_SP; PWM_PRINT(z); PWM_PRINT_SP; PWM_PRINT(w); PWM_PRINT_SP; PWM_PRINT(xx); PWM_PRINT_SP; PWM_PRINT(yy); PWM_PRINT_SP; PWM_PRINT(zz); PWM_PRINT_SP; PWM_PRINTLN(ww); }
+
 //////////////////////////////////////////
 
 
