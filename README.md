@@ -37,9 +37,10 @@
   * [ 2. PWM_DynamicFreq](examples/PWM_DynamicFreq)
   * [ 3. PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
   * [ 4. PWM_MultiChannel](examples/PWM_MultiChannel)
-  * [ 5. PWM_Waveform](examples/PWM_Waveform) **New**
-  * [ 6. PWM_Waveform_Fast](examples/PWM_Waveform_Fast). **New**
-  * [ 7. PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int). **New**
+  * [ 5. PWM_Waveform](examples/PWM_Waveform)
+  * [ 6. PWM_Waveform_Fast](examples/PWM_Waveform_Fast)
+  * [ 7. PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int)
+  * [ 8. PWM_Basic](examples/PWM_Basic). **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
