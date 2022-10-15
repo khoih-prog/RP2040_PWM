@@ -323,7 +323,7 @@ PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
 
 ### Example [PWM_Multi](examples/PWM_Multi)
 
-https://github.com/khoih-prog/RP2040_PWM/blob/9776c5e13215364a6596cf3e0c5ddd87bfa92cdb/examples/PWM_Multi/PWM_Multi.ino#L1-L108
+https://github.com/khoih-prog/RP2040_PWM/blob/cc44babb755eeec370393ecbe93fb5090b1c802a/examples/PWM_Multi/PWM_Multi.ino#L1-L108
 
 
 ---
