@@ -12,7 +12,7 @@
   Therefore, their executions are not blocked by bad-behaving functions / tasks.
   This important feature is absolutely necessary for mission-critical tasks.
 
-  Version: 1.3.1
+  Version: 1.4.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -27,6 +27,7 @@
   1.2.0   K Hoang      16/04/2022 Add manual setPWM function to use in wafeform creation
   1.3.0   K Hoang      16/04/2022 Add setPWM_Int function for optional uint32_t dutycycle = real_dutycycle * 1000
   1.3.1   K Hoang      11/09/2022 Add minimal example `PWM_Basic`
+  1.4.0   K Hoang      15/10/2022 Fix glitch when changing dutycycle. Adjust MIN_PWM_FREQUENCY/MAX_PWM_FREQUENCY dynamically
 *****************************************************************************************************************************/
 
 #pragma once
@@ -66,13 +67,13 @@
 #endif
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION           "RP2040_PWM v1.3.1"
+  #define RP2040_PWM_VERSION           "RP2040_PWM v1.4.0"
   
   #define RP2040_PWM_VERSION_MAJOR     1
-  #define RP2040_PWM_VERSION_MINOR     3
-  #define RP2040_PWM_VERSION_PATCH     1
+  #define RP2040_PWM_VERSION_MINOR     4
+  #define RP2040_PWM_VERSION_PATCH     0
 
-  #define RP2040_PWM_VERSION_INT       1003001
+  #define RP2040_PWM_VERSION_INT       1004000
 #endif
 
 #include <math.h>
@@ -82,6 +83,8 @@
 #include "PWM_Generic_Debug.h"
 
 #define MAX_PWM_FREQUENCY        (62500000.0f)
+
+// For 125MHz CPU. To adjust according to actual CPU Frequency
 #define MIN_PWM_FREQUENCY        (7.5f)
 
 // New from v1.1.0
@@ -332,14 +335,15 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
-  // dutycycle from 0-100,000 for 0%-100% to make use of 16-bit top register
+// dutycycle from 0-100,000 for 0%-100% to make use of 16-bit top register
   // dutycycle = real_dutycycle * 1000 for better accuracy
   bool setPWM_Int(const uint8_t& pin, const float& frequency, const uint32_t& dutycycle, bool phaseCorrect = false)
   {
     bool newFreq      = false;
     bool newDutyCycle = false;
     
-    if ( (frequency <= MAX_PWM_FREQUENCY) && (frequency >= MIN_PWM_FREQUENCY) )
+    if ( (frequency <= ( (float) MAX_PWM_FREQUENCY * freq_CPU / 125000000)) 
+      && (frequency >= ( (float) MIN_PWM_FREQUENCY * freq_CPU / 125000000) ) )
     {   
       _pin = pin;
       
@@ -389,8 +393,22 @@ class RP2040_PWM
         pwm_config_set_clkdiv_int(&config, _PWM_config.div);
         pwm_config_set_wrap(&config, _PWM_config.top);
         
-        // auto start running once configured
-        pwm_init(_slice_num, &config, true);
+        if ( newDutyCycle )
+        {
+          // KH, to fix glitch when changing dutycycle from v1.4.0
+          // Check https://github.com/khoih-prog/RP2040_PWM/issues/10
+          // From pico-sdk/src/rp2_common/hardware_pwm/include/hardware/pwm.h
+          // Only take effect after the next time the PWM slice wraps
+          // (or, in phase-correct mode, the next time the slice reaches 0). 
+          // If the PWM is not running, the write is latched in immediately
+          //pwm_set_wrap(uint slice_num, uint16_t wrap)
+          pwm_set_wrap(_slice_num, _PWM_config.top);
+        }
+        else
+        {
+          // auto start running once configured
+          pwm_init(_slice_num, &config, true);
+        }
         
         // To avoid uint32_t overflow and still keep accuracy as _dutycycle max = 100,000 > 65536 of uint16_t
         pwm_set_gpio_level(_pin, ( _PWM_config.top * (_dutycycle / 2) ) / 50000 );
@@ -447,7 +465,7 @@ class RP2040_PWM
   }
   
   ///////////////////////////////////////////
-  
+   
   bool setPWM(const uint8_t& pin, const float& frequency, const float& dutycycle, bool phaseCorrect = false)
   {
     return setPWM_Int(pin, frequency, dutycycle * 1000, phaseCorrect);
@@ -533,7 +551,7 @@ class RP2040_PWM
   
   bool calc_TOP_and_DIV(const float& freq)
   {           
-    if (freq >= 2000.0)
+    if (freq > 2000.0)
     {
       _PWM_config.div = 1;
     }
@@ -549,13 +567,13 @@ class RP2040_PWM
     {
       _PWM_config.div = 200;
     }
-    else if (freq >= MIN_PWM_FREQUENCY)
+    else if (freq >= ( (float) MIN_PWM_FREQUENCY * freq_CPU / 125000000))
     {
       _PWM_config.div = 255;
     }
     else
     {
-      PWM_LOGERROR1("Error, freq must be >=", MIN_PWM_FREQUENCY);
+      PWM_LOGERROR1("Error, freq must be >=", ( (float) MIN_PWM_FREQUENCY * freq_CPU / 125000000));
       
       return false;
     }

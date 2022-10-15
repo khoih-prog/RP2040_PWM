@@ -22,10 +22,12 @@ RP2040_PWM* PWM_Instance;
 float frequency;
 float dutyCycle;
 
+#define pinToUse      25
+
 void setup()
 {
   //assigns pin 25 (built in LED), with frequency of 20 KHz and a duty cycle of 0%
-  PWM_Instance = new RP2040_PWM(25, 20000, 0);
+  PWM_Instance = new RP2040_PWM(pinToUse, 20000, 0);
 }
 
 void loop()
@@ -34,10 +36,10 @@ void loop()
   frequency = 20000;
   dutyCycle = 90;
 
-  PWM_Instance->setPWM(25, frequency, dutyCycle, true);
+  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
 
   delay(1000);
-  dutyCycle = 5;
+  dutyCycle = 10;
   
-  PWM_Instance->setPWM(25, frequency, dutyCycle, true);
+  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
 }

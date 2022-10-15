@@ -11,7 +11,7 @@
   by the PWM block
 *****************************************************************************************************************************/
 
-#define _PWM_LOGLEVEL_        3
+#define _PWM_LOGLEVEL_        1
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
@@ -59,6 +59,7 @@ void setup()
   Serial.println(RP2040_PWM_VERSION);
 
   frequency = 1000;
+  
   PWM_Instance = new RP2040_PWM(pinToUse, frequency, 50);
 
   if (PWM_Instance)
@@ -82,13 +83,14 @@ void printPWMInfo(RP2040_PWM* PWM_Instance)
 void loop()
 {
   delay(5000);
-  frequency = 2000.0f;
+
+  frequency = 5000;
 
   // dutyCycle = real_dutyCycle * 1000
   dutyCycle = 50000;
   
   Serial.print(F("Change PWM DutyCycle to ")); Serial.println((float) dutyCycle / 1000);
-  PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle, true);
+  PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
 
   printPWMInfo(PWM_Instance);
 
@@ -98,6 +100,6 @@ void loop()
   dutyCycle = 20000;
   
   Serial.print(F("Change PWM DutyCycle to ")); Serial.println((float) dutyCycle / 1000);
-  PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle, true);
+  PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
   printPWMInfo(PWM_Instance);
 }

@@ -86,7 +86,7 @@ void loop()
   dutyCycle = 50.0f;
   
   Serial.print(F("Change PWM DutyCycle to ")); Serial.println(dutyCycle);
-  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle, true);
+  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
 
   printPWMInfo(PWM_Instance);
 
@@ -94,6 +94,6 @@ void loop()
   dutyCycle = 10.0f;
   
   Serial.print(F("Change PWM DutyCycle to ")); Serial.println(dutyCycle);
-  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle, true);
+  PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
   printPWMInfo(PWM_Instance);
 }

@@ -11,7 +11,7 @@
   by the PWM block
 *****************************************************************************************************************************/
 
-#define _PWM_LOGLEVEL_        3
+#define _PWM_LOGLEVEL_        1
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
@@ -51,7 +51,7 @@ uint32_t PWM_Pins[]       = { pin0, pin1, pin2, pin3, pin4, pin5, pin6, pin7 };
 
 float dutyCycle[NUM_OF_PINS]  = { 10.0f, 50.0f, 30.0f, 40.0f, 50.0f, 60.0f, 70.0f, 80.0f };
 
-float freq[] = { 7.50f, 8.0f, 10.0f, 1000.0f, 2000.0f, 3000.0f, 8000.0f, 9999.0f };
+float freq[] = { 20.0f, 30.0f, 40.0f, 1000.0f, 2000.0f, 3000.0f, 8000.0f, 9999.0f };
 
 
 RP2040_PWM* PWM_Instance[NUM_OF_PINS];

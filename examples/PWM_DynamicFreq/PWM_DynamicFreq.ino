@@ -11,7 +11,7 @@
   by the PWM block
 *****************************************************************************************************************************/
 
-#define _PWM_LOGLEVEL_        3
+#define _PWM_LOGLEVEL_        1
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
@@ -56,7 +56,7 @@ void setup()
   Serial.print(F("\nStarting PWM_DynamicFreq on ")); Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
 
-  frequency = 1000.0f;
+  frequency = 10000.0f;
   PWM_Instance = new RP2040_PWM(pinToUse, frequency, 50.0f);
 
   if (PWM_Instance)
@@ -82,18 +82,17 @@ void loop()
 {
   delay(5000);
   
-  frequency = 2000.0f;
+  frequency = 20000.0f;
   
   Serial.print(F("Change PWM Freq to ")); Serial.println(frequency);
-  PWM_Instance->setPWM(pinToUse, frequency, 50.0f, true);
-
+  PWM_Instance->setPWM(pinToUse, frequency, 50.0f);
   printPWMInfo(PWM_Instance);
 
   delay(5000);
   
-  frequency = 1000.0f;
+  frequency = 10000.0f;
   
   Serial.print(F("Change PWM Freq to ")); Serial.println(frequency);
-  PWM_Instance->setPWM(pinToUse, frequency, 50.0f, true);
+  PWM_Instance->setPWM(pinToUse, frequency, 50.0f);
   printPWMInfo(PWM_Instance);
 }

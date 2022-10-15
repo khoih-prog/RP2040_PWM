@@ -131,7 +131,7 @@ void loop()
 {
   for (int index = 0; index < NUM_PWM_POINTS; index++)
   {
-    PWM_Instance->setPWM_manual(pinToUse, PWM_data[index].top, PWM_data[index].div, PWM_data[index].level, true);
+    PWM_Instance->setPWM_manual(pinToUse, PWM_data[index].top, PWM_data[index].div, PWM_data[index].level);
 
     // Use at low freq to check
     //printPWMInfo(PWM_Instance);
