@@ -70,6 +70,22 @@
 
 This PWM-wrapper library enables you to use Hardware-PWM blocks on RP2040-based boards to create and output PWM any GPIO pin. These purely hardware-based PWM channels can generate from very low (lowest is **7.5Hz * (F_CPU/125)**) to very high PWM frequencies (in the **MHz** range, up to **(F_CPU/2) or 62.5MHz**).
 
+This library is using the **same or similar functions** as other FastPWM libraries, as follows, to enable you to **port your PWM code easily between platforms**
+
+- [**RP2040_PWM**](https://github.com/khoih-prog/RP2040_PWM)
+- [**AVR_PWM**](https://github.com/khoih-prog/AVR_PWM)
+- [**megaAVR_PWM**](https://github.com/khoih-prog/megaAVR_PWM)
+- [**ESP32_FastPWM**](https://github.com/khoih-prog/ESP32_FastPWM)
+- [**SAMD_PWM**](https://github.com/khoih-prog/SAMD_PWM)
+- [**SAMDUE_PWM**](https://github.com/khoih-prog/SAMDUE_PWM)
+- [**nRF52_PWM**](https://github.com/khoih-prog/nRF52_PWM)
+- [**ATtiny_PWM**](https://github.com/khoih-prog/ATtiny_PWM)
+- [**Teensy_PWM**](https://github.com/khoih-prog/Teensy_PWM)
+- [**Portenta_H7_PWM**](https://github.com/khoih-prog/Portenta_H7_PWM)
+- [**MBED_RP2040_PWM**](https://github.com/khoih-prog/MBED_RP2040_PWM)
+- [**nRF52_MBED_PWM**](https://github.com/khoih-prog/nRF52_MBED_PWM)
+- [**STM32_PWM**](https://github.com/khoih-prog/STM32_PWM)
+
 ---
 
 The most important feature is they're purely hardware-based PWM channels. Therefore, their operations are **not blocked by bad-behaving software functions / tasks**.
@@ -117,8 +133,8 @@ Functions using normal software-based PWMs, relying on loop() and calling millis
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://www.arduino.cc/en/Main/Software). Using `Arduino IDE 2.0.0+` at your own risk.
- 2. [`ArduinoCore-mbed mbed_nano or mbed_rp2040 core 3.3.0+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino **NANO_RP2040_CONNECT, RASPBERRY_PI_PICO** boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
- 3. [`Earle Philhower's arduino-pico core v2.6.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, RASPBERRY_PI_PICO_W, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+ 2. [`ArduinoCore-mbed mbed_nano or mbed_rp2040 core 3.4.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino **NANO_RP2040_CONNECT, RASPBERRY_PI_PICO** boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+ 3. [`Earle Philhower's arduino-pico core v2.6.3+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, RASPBERRY_PI_PICO_W, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
  
  
 ---
