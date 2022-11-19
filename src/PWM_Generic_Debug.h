@@ -58,7 +58,7 @@ const char PWM_MARK[] = "[PWM] ";
 const char PWM_SP[]   = " ";
 
 #define PWM_PRINT         PWM_DBG_PORT.print
-#define PWM_PRINTLN       PWM_DBG_PORT.println  
+#define PWM_PRINTLN       PWM_DBG_PORT.println
 
 #define PWM_PRINT_MARK    PWM_PRINT(PWM_MARK)
 #define PWM_PRINT_SP      PWM_PRINT(PWM_SP)

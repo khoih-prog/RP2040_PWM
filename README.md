@@ -6,8 +6,13 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/RP2040_PWM.svg)](http://github.com/khoih-prog/RP2040_PWM/issues)
 
+
+
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+<a href="https://profile-counter.glitch.me/khoih-prog/count.svg" title="Total khoih-prog Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog/count.svg" style="height: 30px;width: 200px;"></a>
+<a href="https://profile-counter.glitch.me/khoih-prog-RP2040_PWM/count.svg" title="RP2040_PWM Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog-RP2040_PWM/count.svg" style="height: 30px;width: 200px;"></a>
+
 
 ---
 ---
@@ -91,7 +96,7 @@ This library is using the **same or similar functions** as other FastPWM librari
 
 The most important feature is they're purely hardware-based PWM channels. Therefore, their operations are **not blocked by bad-behaving software functions / tasks**.
 
-This important feature is absolutely necessary for mission-critical tasks. These hardware PWM-channels, still work even if other software functions are blocking. Moreover, they are much more precise (certainly depending on clock frequency accuracy) than other software timers using millis() or micros(). That's necessary if you need to control external systems (Servo, etc.) requiring better accuracy.
+This important feature is absolutely necessary for mission-critical tasks. These hardware PWM-channels, still work even if other software functions are blocking. Moreover, they are much more precise (certainly depending on clock frequency accuracy) than other software timers using `millis()` or `micros()`. That's necessary if you need to control external systems (Servo, etc.) requiring better accuracy.
 
 The [**PWM_Multi**](examples/PWM_Multi) example will demonstrate the usage of multichannel PWM using multiple Hardware-PWM blocks (slices). The 8 independent Hardware-PWM slices are used **to control 8 different PWM outputs**, with totally independent frequencies and dutycycles.
 
@@ -102,7 +107,7 @@ Being hardware-based PWM, their executions are not blocked by bad-behaving funct
 This non-being-blocked important feature is absolutely necessary for mission-critical tasks.
 
 You'll see `software-based` SimpleTimer is blocked while system is connecting to WiFi / Internet / Blynk, as well as by blocking task 
-in loop(), using delay() function as an example. The elapsed time then is very unaccurate
+in `loop()`, using `delay()` function as an example. The elapsed time then is very unaccurate
 
 ---
 
@@ -178,7 +183,7 @@ Pulse width modulation (PWM) is a scheme where a digital signal provides a smoot
 The RP2040 PWM block has 8 identical slices. Each slice can drive two PWM output signals, or measure the frequency or duty cycle of an input signal. This gives a total of up to 16 controllable PWM outputs. All 30 GPIO pins can be driven by the PWM block.
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/RP2040_PWM/blob/main/pics/PWM_Slice.png">
+    <img src="https://github.com/khoih-prog/RP2040_PWM/raw/main/pics/PWM_Slice.png">
 </p>
 
 Each PWM slice is equipped with the following:
@@ -200,7 +205,7 @@ Slices can be enabled or disabled simultaneously via a single, global control re
 #### Programmer’s Model
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/RP2040_PWM/blob/main/pics/Mappings.png">
+    <img src="https://github.com/khoih-prog/RP2040_PWM/raw/main/pics/Mappings.png">
 </p>
 
 All 30 GPIO pins on RP2040 can be used for PWM:
@@ -353,7 +358,7 @@ https://github.com/khoih-prog/RP2040_PWM/blob/cc44babb755eeec370393ecbe93fb5090b
 The following is the sample terminal output when running example [PWM_Multi](examples/PWM_Multi) on **RaspberryPi Pico**, running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
 
 
-```
+```cpp
 Starting PWM_Multi on RaspberryPi Pico
 RP2040_PWM v1.4.0
 =============================================================
@@ -377,7 +382,7 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 
 The following is the sample terminal output when running example [**PWM_Multi**](examples/PWM_Multi) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
 
-```
+```cpp
 Starting PWM_Multi on RASPBERRY_PI_PICO
 RP2040_PWM v1.4.0
 =============================================================
@@ -401,7 +406,7 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 
 The following is the sample terminal output when running example [**PWM_DynamicFreq**](examples/PWM_DynamicFreq) on **Nano RP2040 Connect**, running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to change dynamically PWM frequencies and the accuracy of Hardware-based PWM.
 
-```
+```cpp
 Starting PWM_DynamicFreq on Nano RP2040 Connect
 RP2040_PWM v1.4.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
@@ -446,7 +451,7 @@ Actual PWM Frequency = 2000.00
 
 The following is the sample terminal output when running example [**PWM_DynamicDutyCycle**](examples/PWM_DynamicDutyCycle) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to change dynamically PWM dutyCycle and the accuracy of Hardware-based PWM.
 
-```
+```cpp
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
 RP2040_PWM v1.4.0
 [PWM] _PWM_config.top = 13299 , _actualFrequency = 1000.00
@@ -503,7 +508,7 @@ Actual PWM Frequency = 2000.00
 The following is the sample terminal output when running example [**PWM_MultiChannel**](examples/PWM_MultiChannel) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to output for both channels of a PWM slice
 
 
-```
+```cpp
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
 RP2040_PWM v1.4.0
 =============================================================
@@ -521,7 +526,7 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 The following is the sample terminal output when running example [**PWM_Waveform**](examples/PWM_Waveform) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
 
 
-```
+```cpp
 Starting PWM_Waveform on RASPBERRY_PI_PICO
 RP2040_PWM v1.4.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
@@ -635,7 +640,7 @@ RP2040_PWM v1.4.0
 The following is the sample terminal output when running example [**PWM_Waveform_Fast**](examples/PWM_Waveform_Fast) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
 
 
-```
+```cpp
 Starting PWM_Waveform_Fast on RASPBERRY_PI_PICO
 RP2040_PWM v1.4.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
