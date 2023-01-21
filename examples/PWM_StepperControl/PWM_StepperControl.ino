@@ -57,7 +57,7 @@ void setup()
 
   delay(100);
 
-  Serial.print(F("\nStarting PWM_DynamicFreq on "));
+  Serial.print(F("\nStarting PWM_StepperControl on "));
   Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
   
