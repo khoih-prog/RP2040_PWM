@@ -40,6 +40,7 @@
 ### Releases v1.4.1
 
 1. Add example [PWM_StepperControl](https://github.com/khoih-prog/RP2040_PWM/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM. Check [Using PWM to step a stepper driver #16](https://github.com/khoih-prog/RP2040_PWM/issues/16)
+2. Use `allman astyle` and add `utils`
 
 ### Releases v1.4.0
 
