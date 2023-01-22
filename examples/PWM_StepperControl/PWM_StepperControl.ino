@@ -70,8 +70,8 @@ void setup()
   Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
   
-  //  Create PWM object and passed just a random frequency of 500 in it
-  //  The duty cycle is how you turn the motor on and off
+  // Create PWM object and passed just a random frequency of 500
+  // The duty cycle is how you turn the motor on and off
   stepper = new RP2040_PWM(STEP_PIN, 500, 0);
 }
 
@@ -86,5 +86,9 @@ void loop()
 
   // Reversing
   setSpeed(-500);
+  delay(3000);
+
+  // Stop before reversing
+  setSpeed(0);
   delay(3000);
 }
