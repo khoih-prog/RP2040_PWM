@@ -13,6 +13,8 @@
   Credits of Paul van Dinther (https://github.com/dinther). Check https://github.com/khoih-prog/RP2040_PWM/issues/16
 *****************************************************************************************************************************/
 
+// Use with Stepper-Motor driver, such as TMC2209
+
 #define _PWM_LOGLEVEL_        1
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
@@ -35,16 +37,23 @@
 #include <RP2040_PWM.h>
 
 RP2040_PWM* stepper;
-float frequency;
-float dutyCycle;
+
 #define STEP_PIN      8
 #define DIR_PIN       9
 
 void setSpeed(int speed)
 {
-  //  Set the frequency of the PWM output and a duty cycle of 50%
-  digitalWrite(DIR_PIN, (speed < 0));
-  stepper->setPWM(STEP_PIN, abs(speed), 50);  
+  if (speed == 0)
+  {
+    // Use DC = 0 to stop stepper
+    stepper->setPWM(STEP_PIN, 500, 0);
+  }
+  else
+  {
+    //  Set the frequency of the PWM output and a duty cycle of 50%
+    digitalWrite(DIR_PIN, (speed < 0));
+    stepper->setPWM(STEP_PIN, abs(speed), 50);
+  }
 }
 
 void setup() 
@@ -70,6 +79,12 @@ void loop()
 {
   setSpeed(1000);
   delay(3000);
+
+  // Stop before reversing
+  setSpeed(0);
+  delay(3000);
+
+  // Reversing
   setSpeed(-500);
   delay(3000);
 }

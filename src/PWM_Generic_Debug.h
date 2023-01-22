@@ -6,13 +6,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_PWM
   Licensed under MIT license
 
-  Now even you use all these new 16 ISR-based timers,with their maximum interval practically unlimited (limited only by
-  unsigned long miliseconds), you just consume only one RP2040 STM32 timer and avoid conflicting with other cores' tasks.
-  The accuracy is nearly perfect compared to software timers. The most important feature is they're ISR-based timers
-  Therefore, their executions are not blocked by bad-behaving functions / tasks.
-  This important feature is absolutely necessary for mission-critical tasks.
-
-  Version: 1.4.0
+  Version: 1.4.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -28,6 +22,7 @@
   1.3.0   K Hoang      16/04/2022 Add setPWM_Int function for optional uint32_t dutycycle = real_dutycycle * 1000
   1.3.1   K Hoang      11/09/2022 Add minimal example `PWM_Basic`
   1.4.0   K Hoang      15/10/2022 Fix glitch when changing dutycycle. Adjust MIN_PWM_FREQUENCY/MAX_PWM_FREQUENCY dynamically
+  1.4.1   K Hoang      21/01/2023 Add `PWM_StepperControl` example
  *****************************************************************************************************************************/
 
 #pragma once
@@ -58,7 +53,7 @@ const char PWM_MARK[] = "[PWM] ";
 const char PWM_SP[]   = " ";
 
 #define PWM_PRINT         PWM_DBG_PORT.print
-#define PWM_PRINTLN       PWM_DBG_PORT.println
+#define PWM_PRINTLN       PWM_DBG_PORT.println  
 
 #define PWM_PRINT_MARK    PWM_PRINT(PWM_MARK)
 #define PWM_PRINT_SP      PWM_PRINT(PWM_SP)

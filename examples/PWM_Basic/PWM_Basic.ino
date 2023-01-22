@@ -40,6 +40,6 @@ void loop()
 
   delay(1000);
   dutyCycle = 10;
-  
+
   PWM_Instance->setPWM(pinToUse, frequency, dutyCycle);
 }

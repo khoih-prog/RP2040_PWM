@@ -13,24 +13,24 @@
 
 // This example to demo the new function setPWM_manual(uint8_t pin, uint16_t top, uint8_t div, uint16_t level, bool phaseCorrect = false)
 // used to generate a waveform. Check https://github.com/khoih-prog/RP2040_PWM/issues/6
- 
+
 #define _PWM_LOGLEVEL_        2
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
 
-  #if(_PWM_LOGLEVEL_>3)
-    #warning USING_MBED_RP2040_PWM
-  #endif
+#if(_PWM_LOGLEVEL_>3)
+  #warning USING_MBED_RP2040_PWM
+#endif
 
 #elif ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
         defined(ARDUINO_GENERIC_RP2040) ) && !defined(ARDUINO_ARCH_MBED)
 
-  #if(_PWM_LOGLEVEL_>3)
-    #warning USING_RP2040_PWM
-  #endif
+#if(_PWM_LOGLEVEL_>3)
+  #warning USING_RP2040_PWM
+#endif
 #else
-  #error This code is intended to run on the RP2040 mbed_nano, mbed_rp2040 or arduino-pico platform! Please check your Tools->Board setting.
+#error This code is intended to run on the RP2040 mbed_nano, mbed_rp2040 or arduino-pico platform! Please check your Tools->Board setting.
 #endif
 
 #include "RP2040_PWM.h"
@@ -47,7 +47,7 @@
 
 RP2040_PWM* PWM_Instance;
 
-typedef struct 
+typedef struct
 {
   uint16_t top;
   uint8_t div;
@@ -95,11 +95,13 @@ char dashLine[] = "=============================================================
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial && millis() < 5000);
-  
+
   delay(100);
 
-  Serial.print(F("\nStarting PWM_Waveform_Fast on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStarting PWM_Waveform_Fast on "));
+  Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
 
   frequency = 1000;
@@ -122,7 +124,8 @@ void printPWMInfo(RP2040_PWM* PWM_Instance)
   uint32_t top = PWM_Instance->get_TOP();
 
   // PWM_Freq = ( F_CPU ) / [ ( TOP + 1 ) * ( DIV + DIV_FRAC/16) ]
-  PWM_LOGINFO1("Actual PWM Frequency = ", PWM_Instance->get_freq_CPU() / ( (PWM_Instance->get_TOP() + 1) * (PWM_Instance->get_DIV() ) ) );
+  PWM_LOGINFO1("Actual PWM Frequency = ",
+               PWM_Instance->get_freq_CPU() / ( (PWM_Instance->get_TOP() + 1) * (PWM_Instance->get_DIV() ) ) );
 
   PWM_LOGDEBUG5("TOP =", top, ", DIV =", div, ", CPU_freq =", PWM_Instance->get_freq_CPU());
 }
@@ -135,7 +138,7 @@ void loop()
 
     // Use at low freq to check
     //printPWMInfo(PWM_Instance);
-    
+
     // delay something here between data
     delay(100);
   }

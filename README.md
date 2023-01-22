@@ -44,7 +44,8 @@
   * [ 5. PWM_Waveform](examples/PWM_Waveform)
   * [ 6. PWM_Waveform_Fast](examples/PWM_Waveform_Fast)
   * [ 7. PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int)
-  * [ 8. PWM_Basic](examples/PWM_Basic). **New**
+  * [ 8. PWM_Basic](examples/PWM_Basic)
+  * [ 9. PWM_StepperControl](examples/PWM_StepperControl). **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
@@ -137,8 +138,8 @@ Functions using normal software-based PWMs, relying on loop() and calling millis
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://www.arduino.cc/en/Main/Software). Using `Arduino IDE 2.0.0+` at your own risk.
- 2. [`ArduinoCore-mbed mbed_nano or mbed_rp2040 core 3.4.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino **NANO_RP2040_CONNECT, RASPBERRY_PI_PICO** boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
- 3. [`Earle Philhower's arduino-pico core v2.6.3+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, RASPBERRY_PI_PICO_W, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+ 2. [`ArduinoCore-mbed mbed_nano or mbed_rp2040 core 3.5.4+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino **NANO_RP2040_CONNECT, RASPBERRY_PI_PICO** boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+ 3. [`Earle Philhower's arduino-pico core v2.7.1+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, RASPBERRY_PI_PICO_W, ADAFRUIT_FEATHER_RP2040, ADAFRUIT_ITSYBITSY_RP2040, CYTRON_MAKER_NANO_RP2040, SPARKFUN_PROMICRO_RP2040, CHALLENGER_2040_WIFI_RP2040, ILABS_2040_RPICO32_RP2040, MELOPERO_SHAKE_RP2040, SOLDERPARTY_RP2040_STAMP, UPESY_RP2040_DEVKIT, WIZNET_5100S_EVB_PICO, GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
  
  
 ---
@@ -335,7 +336,8 @@ PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
  5. [PWM_Waveform](examples/PWM_Waveform)
  6. [PWM_Waveform_Fast](examples/PWM_Waveform_Fast)
  7. [PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int)
- 7. [PWM_Basic](examples/PWM_Basic). **New**
+ 8. [PWM_Basic](examples/PWM_Basic)
+ 9. [PWM_StepperControl](examples/PWM_StepperControl). **New**
  
  
 ---
@@ -358,7 +360,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```cpp
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.4.0
+RP2040_PWM v1.4.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -382,7 +384,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```cpp
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.0
+RP2040_PWM v1.4.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -406,7 +408,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```cpp
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.4.0
+RP2040_PWM v1.4.1
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -451,7 +453,7 @@ The following is the sample terminal output when running example [**PWM_DynamicD
 
 ```cpp
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.0
+RP2040_PWM v1.4.1
 [PWM] _PWM_config.top = 13299 , _actualFrequency = 1000.00
 [PWM] pin =  25 , PWM_CHAN = 1
 [PWM] PWM enabled, slice =  4 , _frequency =  1000.00
@@ -508,7 +510,7 @@ The following is the sample terminal output when running example [**PWM_MultiCha
 
 ```cpp
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.0
+RP2040_PWM v1.4.1
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -526,7 +528,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.0
+RP2040_PWM v1.4.1
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -640,7 +642,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform_Fast on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.0
+RP2040_PWM v1.4.1
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -802,7 +804,7 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
 14. Add `minimal` example [PWM_Basic](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Basic)
 15. Fix glitch when dynamically changing dutycycle. Check [Changing Duty Cycle Dynamically Creates Runt PWM pulse #10](https://github.com/khoih-prog/RP2040_PWM/issues/10)
 16. Adjust `MIN_PWM_FREQUENCY` and `MAX_PWM_FREQUENCY` dynamically according to actual `F_CPU`
-
+17. Add example [PWM_StepperControl](examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM
 
 ---
 ---
@@ -822,6 +824,8 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 4. Thanks to [Dr. Benjamin Bird](https://github.com/Chick92) to make PR
 - [added minimal viable program to get the user up and running #9](https://github.com/khoih-prog/RP2040_PWM/pull/9) leading to v1.3.1
 5. Thanks to [Rocking Y Productions](https://github.com/RockingYProductions) to request enhancement in [Changing Duty Cycle Dynamically Creates Runt PWM pulse #10](https://github.com/khoih-prog/RP2040_PWM/issues/10), leading to v1.4.0
+6. Thanks to [Paul van Dinther](https://github.com/dinther) for proposing new way to use PWM to drive `Stepper-Motor` in [Using PWM to step a stepper driver #16](https://github.com/khoih-prog/RP2040_PWM/issues/16), leading to v1.4.1
+
 
 <table>
   <tr>
@@ -830,6 +834,7 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
     <td align="center"><a href="https://github.com/Laserjones"><img src="https://github.com/Laserjones.png" width="100px;" alt="Laserjones"/><br /><sub><b>⭐️ Joerg Starkmuth</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/Chick92"><img src="https://github.com/Chick92.png" width="100px;" alt="Chick92"/><br /><sub><b>⭐️ Dr. Benjamin Bird</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/RockingYProductions"><img src="https://github.com/RockingYProductions.png" width="100px;" alt="RockingYProductions"/><br /><sub><b>Rocking Y Productions</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/dinther"><img src="https://github.com/dinther.png" width="100px;" alt="dinther"/><br /><sub><b>Paul van Dinther</b></sub></a><br /></td>
   </tr>
 </table>
   
