@@ -18,6 +18,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.5.0](#Releases-v150)
   * [Releases v1.4.1](#Releases-v141)
   * [Releases v1.4.0](#Releases-v140)
   * [Releases v1.3.1](#Releases-v131)
