@@ -6,7 +6,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_PWM
   Licensed under MIT license
 
-  Version: 1.4.1
+  Version: 1.5.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -23,12 +23,15 @@
   1.3.1   K Hoang      11/09/2022 Add minimal example `PWM_Basic`
   1.4.0   K Hoang      15/10/2022 Fix glitch when changing dutycycle. Adjust MIN_PWM_FREQUENCY/MAX_PWM_FREQUENCY dynamically
   1.4.1   K Hoang      21/01/2023 Add `PWM_StepperControl` example
+  1.5.0   K Hoang      24/01/2023 Add `PWM_manual` example and functions
 *****************************************************************************************************************************/
 
 #pragma once
 
 #ifndef RP2040_PWM_H
 #define RP2040_PWM_H
+
+///////////////////////////////////////////////////////////////////
 
 #if ( defined(ARDUINO_NANO_RP2040_CONNECT) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || \
       defined(ARDUINO_GENERIC_RP2040) ) && defined(ARDUINO_ARCH_MBED)
@@ -61,21 +64,27 @@
   #error This code is intended to run on the RP2040 mbed_nano, mbed_rp2040 or arduino-pico platform! Please check your Tools->Board setting.
 #endif
 
+///////////////////////////////////////////////////////////////////
+
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION           "RP2040_PWM v1.4.1"
+  #define RP2040_PWM_VERSION           "RP2040_PWM v1.5.0"
   
   #define RP2040_PWM_VERSION_MAJOR     1
-  #define RP2040_PWM_VERSION_MINOR     4
-  #define RP2040_PWM_VERSION_PATCH     1
+  #define RP2040_PWM_VERSION_MINOR     5
+  #define RP2040_PWM_VERSION_PATCH     0
 
-  #define RP2040_PWM_VERSION_INT       1004001
+  #define RP2040_PWM_VERSION_INT       1005000
 #endif
+
+///////////////////////////////////////////////////////////////////
 
 #include <math.h>
 #include <float.h>
 #include "hardware/pwm.h"
 
 #include "PWM_Generic_Debug.h"
+
+///////////////////////////////////////////////////////////////////
 
 #define MAX_PWM_FREQUENCY        (62500000.0f)
 
@@ -88,6 +97,8 @@
 #if !defined(NUM_PWM_SLICES)
   #define NUM_PWM_SLICES      8
 #endif
+
+////////////////////////////////////////
 
 typedef struct 
 {
@@ -109,6 +120,8 @@ static PWM_slice PWM_slice_data[NUM_PWM_SLICES] =
   { 0, 0, 0, false, false },
   { 0, 0, 0, false, false }
 };
+
+////////////////////////////////////////
 
 // Not using float for waveform creating
 typedef struct 
@@ -132,7 +145,6 @@ static PWM_slice_manual PWM_slice_manual_data[NUM_PWM_SLICES] =
   { 0, 0, false, false, false },
   { 0, 0, false, false, false }
 };
-///////////////////////
 
 ///////////////////////////////////////////////////////////////////
 
@@ -188,6 +200,8 @@ class RP2040_PWM
     // Limit level <= _PWM_config.top
     if (level > _PWM_config.top)
       level = _PWM_config.top;
+      
+    _dutycycle  = ( (uint32_t) level * 100000 / _PWM_config.top);  
     
     gpio_set_function(_pin, GPIO_FUNC_PWM);
     
@@ -250,6 +264,18 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
+  // To be called only after previous complete setPWM_manual with top and div params
+  // by checking PWM_slice_manual_data[_slice_num].initialized == true;
+  bool setPWM_DCPercentage_manual(const uint8_t& pin, float& DCPercentage)
+  {  
+    uint16_t dutycycle_level = (DCPercentage * _PWM_config.top) / 100.0f;
+    
+    // Convert to DCValue based on _PWM_config.top
+    return setPWM_manual(pin, dutycycle_level );
+  }
+
+  ///////////////////////////////////////////
+  
   bool setPWM_manual(const uint8_t& pin, const uint16_t& top, const uint8_t& div, 
                      uint16_t& level, bool phaseCorrect = false)
   {   
@@ -261,6 +287,8 @@ class RP2040_PWM
     // Limit level <= top
     if (level > top)
       level = top;
+      
+    _dutycycle  = ( (uint32_t) level * 100000 / top);
     
     gpio_set_function(_pin, GPIO_FUNC_PWM);
     
@@ -330,7 +358,7 @@ class RP2040_PWM
   
   ///////////////////////////////////////////
   
-// dutycycle from 0-100,000 for 0%-100% to make use of 16-bit top register
+  // dutycycle from 0-100,000 for 0%-100% to make use of 16-bit top register
   // dutycycle = real_dutycycle * 1000 for better accuracy
   bool setPWM_Int(const uint8_t& pin, const float& frequency, const uint32_t& dutycycle, bool phaseCorrect = false)
   {
@@ -515,6 +543,21 @@ class RP2040_PWM
   inline uint32_t get_freq_CPU()
   {
     return freq_CPU;
+  }
+  
+  ///////////////////////////////////////////
+
+  inline uint32_t getActualDutyCycle()
+  {
+    // From 0-100,000
+    return _dutycycle;
+  }
+  
+  ///////////////////////////////////////////
+
+  inline uint32_t getPin()
+  {
+    return _pin;
   }
   
   ///////////////////////////////////////////////////////////////////

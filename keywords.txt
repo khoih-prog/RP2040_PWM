@@ -23,6 +23,8 @@ get_TOP	KEYWORD2
 get_DIV	KEYWORD2
 getActualFreq	KEYWORD2
 get_freq_CPU	KEYWORD2
+getActualDutyCycle  KEYWORD2
+getPin  KEYWORD2
 
 
 #######################################

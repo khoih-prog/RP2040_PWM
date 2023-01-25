@@ -37,6 +37,12 @@
 
 ## Changelog
 
+### Releases v1.5.0
+
+1. Add example [PWM_manual](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) to demo how to correctly use PWM to generate waveform
+2. Add function `setPWM_DCPercentage_manual()` to facilitate the setting PWM DC manually by using `DCPercentage`, instead of `absolute DCValue` depending on varying `TOP`
+3. Add functions `getPin()` and `getActualDutyCycle()`
+
 ### Releases v1.4.1
 
 1. Add example [PWM_StepperControl](https://github.com/khoih-prog/RP2040_PWM/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM. Check [Using PWM to step a stepper driver #16](https://github.com/khoih-prog/RP2040_PWM/issues/16)

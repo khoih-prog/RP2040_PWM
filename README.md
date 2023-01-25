@@ -7,7 +7,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/RP2040_PWM.svg)](http://github.com/khoih-prog/RP2040_PWM/issues)
 
 
-
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
 
@@ -45,7 +44,8 @@
   * [ 6. PWM_Waveform_Fast](examples/PWM_Waveform_Fast)
   * [ 7. PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int)
   * [ 8. PWM_Basic](examples/PWM_Basic)
-  * [ 9. PWM_StepperControl](examples/PWM_StepperControl). **New**
+  * [ 9. PWM_StepperControl](examples/PWM_StepperControl) **New**
+  * [10. PWM_manual](examples/PWM_manual) **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
@@ -55,6 +55,7 @@
   * [5. PWM_MultiChannel on RASPBERRY_PI_PICO](#5-PWM_MultiChannel-on-RASPBERRY_PI_PICO)
   * [6. PWM_Waveform on RASPBERRY_PI_PICO](#6-PWM_Waveform-on-RASPBERRY_PI_PICO)
   * [7. PWM_Waveform_Fast on RASPBERRY_PI_PICO](#7-PWM_Waveform_Fast-on-RASPBERRY_PI_PICO)
+  * [8. PWM_manual on RASPBERRY_PI_PICO](#8-PWM_manual-on-RASPBERRY_PI_PICO)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -209,8 +210,8 @@ Slices can be enabled or disabled simultaneously via a single, global control re
 
 All 30 GPIO pins on RP2040 can be used for PWM:
 
-- The 16 PWM channels (8 2-channel slices) appear on GPIO0 to GPIO15, in the order PWM0_A, PWM0_B, PWM1_A, etc.
-- This repeats for GPIO16 to GPIO29. GPIO16 is PWM0 A, GPIO17 is PWM0 B, so on, up to PWM6 B on GPIO29
+- The 16 PWM channels (8 x `2-channel slices`) appear on `GPIO0` to `GPIO15`, in the order `PWM0_A`, `PWM0_B`, `PWM1_A`, etc.
+- This repeats for `GPIO16` to `GPIO29`. `GPIO16` is `PWM0 A`, `GPIO17` is `PWM0 B`, so on, up to `PWM6 B` on `GPIO29`
 - The same PWM output can be selected on two GPIO pins; the same signal will appear on each GPIO.
 - If a PWM B pin is used as an input, and is selected on multiple GPIO pins, then the PWM slice will see the logical OR of those two GPIO inputs
 
@@ -280,14 +281,23 @@ Need to call only once for each pin
 
 ```cpp
 PWM_Instance->setPWM_manual(PWM_Pins, new_top, new_div, new_level);
+bool setPWM_DCPercentage_manual(const uint8_t& pin, float& DCPercentage)
 ```
 
 after that, if just changing `dutyCycle` / `level`, use 
 
 ```cpp
+// For 50.0f dutycycle
+new_level = 50.0f * PWM_Instance->get_TOP() / 100.0f ;
 PWM_Instance->setPWM_manual(PWM_Pins, new_level);
 ```
 
+or better and much easier to use
+
+```cpp
+new_DCPercentage = 50.0f;
+PWM_Instance->setPWM_DCPercentage_manual(PWM_Pins, new_DCPercentage);
+```
 
 #### 5. Important Notes
 
@@ -337,7 +347,8 @@ PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
  6. [PWM_Waveform_Fast](examples/PWM_Waveform_Fast)
  7. [PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int)
  8. [PWM_Basic](examples/PWM_Basic)
- 9. [PWM_StepperControl](examples/PWM_StepperControl). **New**
+ 9. [PWM_StepperControl](examples/PWM_StepperControl) **New**
+10. [PWM_manual](examples/PWM_manual) **New** 
  
  
 ---
@@ -360,7 +371,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```cpp
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.4.1
+RP2040_PWM v1.5.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -384,7 +395,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```cpp
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.1
+RP2040_PWM v1.5.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -408,7 +419,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```cpp
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.4.1
+RP2040_PWM v1.5.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -453,7 +464,7 @@ The following is the sample terminal output when running example [**PWM_DynamicD
 
 ```cpp
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.1
+RP2040_PWM v1.5.0
 [PWM] _PWM_config.top = 13299 , _actualFrequency = 1000.00
 [PWM] pin =  25 , PWM_CHAN = 1
 [PWM] PWM enabled, slice =  4 , _frequency =  1000.00
@@ -510,7 +521,7 @@ The following is the sample terminal output when running example [**PWM_MultiCha
 
 ```cpp
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.1
+RP2040_PWM v1.5.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -528,7 +539,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.1
+RP2040_PWM v1.5.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -637,12 +648,12 @@ RP2040_PWM v1.4.1
 
 ### 7. PWM_Waveform_Fast on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_Waveform_Fast**](examples/PWM_Waveform_Fast) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
+The following is the sample terminal output when running example [**PWM_Waveform_Fast**](examples/PWM_Waveform_Fast) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
 
 
 ```cpp
 Starting PWM_Waveform_Fast on RASPBERRY_PI_PICO
-RP2040_PWM v1.4.1
+RP2040_PWM v1.5.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -747,6 +758,55 @@ RP2040_PWM v1.4.1
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
 ...
 ```
+
+---
+
+
+### 8. PWM_manual on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [**PWM_manual**](examples/PWM_manual) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_DCPercentage_manual()` function in wafeform creation
+
+
+```cpp
+Starting PWM_manual on RASPBERRY_PI_PICO
+RP2040_PWM v1.5.0
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 0.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 5.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 10.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 15.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 20.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 25.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 30.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 35.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 40.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 45.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 50.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+...
+```
+
+
 ---
 ---
 
@@ -804,7 +864,11 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
 14. Add `minimal` example [PWM_Basic](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Basic)
 15. Fix glitch when dynamically changing dutycycle. Check [Changing Duty Cycle Dynamically Creates Runt PWM pulse #10](https://github.com/khoih-prog/RP2040_PWM/issues/10)
 16. Adjust `MIN_PWM_FREQUENCY` and `MAX_PWM_FREQUENCY` dynamically according to actual `F_CPU`
-17. Add example [PWM_StepperControl](examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM
+17. Add example [PWM_StepperControl](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM
+18. Add example [PWM_manual](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) to demo how to correctly use PWM to generate waveform
+19. Add function `setPWM_DCPercentage_manual()` to facilitate the setting PWM DC manually by using `DCPercentage`, instead of `absolute DCValue` depending on varying `TOP`
+20. Add functions `getPin()` and `getActualDutyCycle()`
+
 
 ---
 ---
@@ -843,6 +907,7 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 ## Contributing
 
 If you want to contribute to this project:
+
 - Report bugs and errors
 - Ask for enhancements
 - Create issues and pull requests
