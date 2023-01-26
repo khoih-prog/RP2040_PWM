@@ -41,7 +41,7 @@
 
 ### Releases v1.6.0
 
-1. Optimize speed with new `setPWM_manual_Fast` function to improve almost 50% compared to `setPWM_manual`. Check 
+1. Optimize speed with new `setPWM_manual_Fast` function to improve almost 50% compared to `setPWM_manual`. Check [setPWM latency #19](https://github.com/khoih-prog/RP2040_PWM/issues/19)
 2. Add example [PWM_SpeedTest](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_SpeedTest) to demo the better speed of new `setPWM_manual_Fast` function
 3. Modify examples [PWM_manual](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) to use new `setPWM_manual_Fast` function
 
