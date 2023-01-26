@@ -6,7 +6,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_PWM
   Licensed under MIT license
 
-  Version: 1.5.0
+  Version: 1.6.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -24,6 +24,7 @@
   1.4.0   K Hoang      15/10/2022 Fix glitch when changing dutycycle. Adjust MIN_PWM_FREQUENCY/MAX_PWM_FREQUENCY dynamically
   1.4.1   K Hoang      21/01/2023 Add `PWM_StepperControl` example
   1.5.0   K Hoang      24/01/2023 Add `PWM_manual` example and functions
+  1.6.0   K Hoang      26/01/2023 Optimize speed with new `setPWM_manual_Fast` function
 *****************************************************************************************************************************/
 
 #pragma once
@@ -67,13 +68,13 @@
 ///////////////////////////////////////////////////////////////////
 
 #ifndef RP2040_PWM_VERSION
-  #define RP2040_PWM_VERSION           "RP2040_PWM v1.5.0"
+  #define RP2040_PWM_VERSION           "RP2040_PWM v1.6.0"
   
   #define RP2040_PWM_VERSION_MAJOR     1
-  #define RP2040_PWM_VERSION_MINOR     5
+  #define RP2040_PWM_VERSION_MINOR     6
   #define RP2040_PWM_VERSION_PATCH     0
 
-  #define RP2040_PWM_VERSION_INT       1005000
+  #define RP2040_PWM_VERSION_INT       1006000
 #endif
 
 ///////////////////////////////////////////////////////////////////
@@ -261,7 +262,37 @@ class RP2040_PWM
 
     return true;  
   }
+
+  ///////////////////////////////////////////
   
+  // To be called only after previous complete setPWM_manual with top and div params
+  // No checking of PWM_slice_manual_data[_slice_num].initialized == true;
+  // No more output to both channels
+  bool setPWM_manual_Fast(const uint8_t& pin, uint16_t& level)
+  {      
+    static uint16_t prev_level = 0;
+            
+    if (prev_level !=  level)
+    {
+      prev_level =  level;
+      _dutycycle = ( (uint32_t) level * 100000 / _PWM_config.top);
+    }
+       
+    // Better @ 1597ns, reducing nearly 1.3us out of setPWM_manual() => 2889ns
+    hw_write_masked( &pwm_hw->slice[pwm_gpio_to_slice_num(pin)].cc,
+                     ((uint)level) << (pwm_gpio_to_channel(pin) ? PWM_CH0_CC_B_LSB : PWM_CH0_CC_A_LSB),
+                     pwm_gpio_to_channel(pin) ? PWM_CH0_CC_B_BITS : PWM_CH0_CC_A_BITS);
+        
+    PWM_LOGINFO3("pin = ", _pin, ", PWM_CHAN =", pwm_gpio_to_channel(_pin));
+    
+    ////////////////////////////////
+       
+    PWM_LOGINFO7("PWM enabled, slice =", _slice_num, ", top =", _PWM_config.top,
+                 ", div =", _PWM_config.div, ", level =", level);
+
+    return true;  
+  }
+      
   ///////////////////////////////////////////
   
   // To be called only after previous complete setPWM_manual with top and div params
@@ -273,7 +304,7 @@ class RP2040_PWM
     // Convert to DCValue based on _PWM_config.top
     return setPWM_manual(pin, dutycycle_level );
   }
-
+  
   ///////////////////////////////////////////
   
   bool setPWM_manual(const uint8_t& pin, const uint16_t& top, const uint8_t& div, 

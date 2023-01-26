@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  PWM_manual.ino
+  PWM_SpeedTest.ino
   For RP2040 boards
   Written by Khoi Hoang
 
@@ -36,23 +36,16 @@
 
 #define UPDATE_INTERVAL       1000L
 
-// Using setPWM_DCPercentage_manual if true
-#define USING_DC_PERCENT      false   //true
-
-#define LED_ON        LOW
-#define LED_OFF       HIGH
-
-#define pinLed        25    // GP25, On-board BUILTIN_LED
-#define pin0          16    // GP16, PWM channel 4B (D2)
-#define pin10         10    // PWM channel 5A
-#define pin11         11    // PWM channel 5B
-
-#define pinToUse      pin10
+#define pinToUse      10
 
 RP2040_PWM* PWM_Instance;
 
 float    frequency = 1000.0f;
 //float    frequency = 10000.0f;
+
+// Using setPWM_DCPercentage_manual if true
+#define USING_DC_PERCENT      false
+//#define USING_DC_PERCENT      true
 
 #if USING_DC_PERCENT
   float    dutycyclePercent = 0.0f;
@@ -88,7 +81,7 @@ void setup()
 
   delay(100);
 
-  Serial.print(F("\nStarting PWM_manual on "));
+  Serial.print(F("\nStarting PWM_SpeedTest on "));
   Serial.println(BOARD_NAME);
   Serial.println(RP2040_PWM_VERSION);
 
@@ -106,44 +99,47 @@ void setup()
     
     PWMPeriod = PWM_Instance->get_TOP();
 
-#if !USING_DC_PERCENT    
+#if USING_DC_PERCENT
+    dutycyclePercent = 50.0f;
+#else
     // 5% steps
-    DCStep = round(PWMPeriod / 20.0f);
+    DCStep = round( PWMPeriod / 20.0f);
+    
+    // 50%
+    dutycycle = PWMPeriod / 2;
 #endif
+
+    printPWMInfo(PWM_Instance);
   }
+
+  Serial.println(F("Average time of setPWM function"));
 }
 
 void loop()
 {
-  static unsigned long update_timeout = UPDATE_INTERVAL;
+  static unsigned long update_timeout = UPDATE_INTERVAL + millis();
+  static uint64_t count = 0;
 
-  // Update DC every UPDATE_INTERVAL (100) milliseconds
-  if (millis() > update_timeout)
-  {
 #if USING_DC_PERCENT
+    // 4569ns
     PWM_Instance->setPWM_DCPercentage_manual(pinToUse, dutycyclePercent);
-
-    dutycyclePercent += DCStepPercent;
-
-    if (dutycyclePercent > 100.0f)
-      dutycyclePercent = 0.0f;
 #else
-    if (dutycycle > PWMPeriod)
-    {
-      //PWM_Instance->setPWM_manual(pinToUse, PWMPeriod);
-      PWM_Instance->setPWM_manual_Fast(pinToUse, PWMPeriod);
-      dutycycle = 0;
-    }
-    else
-    {
-      //PWM_Instance->setPWM_manual(pinToUse, dutycycle);
-      PWM_Instance->setPWM_manual_Fast(pinToUse, dutycycle);
-      dutycycle += DCStep;
-    }
+    // 2889ns
+    //PWM_Instance->setPWM_manual(pinToUse, dutycycle);
+    // 1597ns
+    PWM_Instance->setPWM_manual_Fast(pinToUse, dutycycle);
+    
 #endif
 
-    printPWMInfo(PWM_Instance);
-    
+  count++;
+
+  // Update DC every UPDATE_INTERVAL (1000) milliseconds
+  if (millis() > update_timeout)
+  {
+    Serial.print(F("ns="));
+    Serial.println(UPDATE_INTERVAL * 1000000 / count);
+
+    count = 0;
     update_timeout = millis() + UPDATE_INTERVAL;
   }
 }

@@ -46,6 +46,7 @@
   * [ 8. PWM_Basic](examples/PWM_Basic)
   * [ 9. PWM_StepperControl](examples/PWM_StepperControl) **New**
   * [10. PWM_manual](examples/PWM_manual) **New**
+  * [11. PWM_SpeedTest](examples/PWM_SpeedTest) **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
@@ -56,6 +57,7 @@
   * [6. PWM_Waveform on RASPBERRY_PI_PICO](#6-PWM_Waveform-on-RASPBERRY_PI_PICO)
   * [7. PWM_Waveform_Fast on RASPBERRY_PI_PICO](#7-PWM_Waveform_Fast-on-RASPBERRY_PI_PICO)
   * [8. PWM_manual on RASPBERRY_PI_PICO](#8-PWM_manual-on-RASPBERRY_PI_PICO)
+  * [9. PWM_SpeedTest on RASPBERRY_PI_PICO](#9-PWM_SpeedTest-on-RASPBERRY_PI_PICO)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -288,7 +290,7 @@ after that, if just changing `dutyCycle` / `level`, use
 
 ```cpp
 // For 50.0f dutycycle
-new_level = 50.0f * PWM_Instance->get_TOP() / 100.0f ;
+new_level = 50.0f * PWM_Instance->get_TOP() / 100.0f;
 PWM_Instance->setPWM_manual(PWM_Pins, new_level);
 ```
 
@@ -297,6 +299,14 @@ or better and much easier to use
 ```cpp
 new_DCPercentage = 50.0f;
 PWM_Instance->setPWM_DCPercentage_manual(PWM_Pins, new_DCPercentage);
+```
+
+and the fastest
+
+```cpp
+// For 50.0f dutycycle
+new_level = 50.0f * PWM_Instance->get_TOP() / 100.0f;
+PWM_Instance->setPWM_manual_Fast(pinToUse, dutycycle);
 ```
 
 #### 5. Important Notes
@@ -349,6 +359,7 @@ PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
  8. [PWM_Basic](examples/PWM_Basic)
  9. [PWM_StepperControl](examples/PWM_StepperControl) **New**
 10. [PWM_manual](examples/PWM_manual) **New** 
+11. [PWM_SpeedTest](examples/PWM_SpeedTest) **New** 
  
  
 ---
@@ -371,7 +382,7 @@ The following is the sample terminal output when running example [PWM_Multi](exa
 
 ```cpp
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -395,7 +406,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```cpp
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -419,7 +430,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```cpp
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -464,7 +475,7 @@ The following is the sample terminal output when running example [**PWM_DynamicD
 
 ```cpp
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 [PWM] _PWM_config.top = 13299 , _actualFrequency = 1000.00
 [PWM] pin =  25 , PWM_CHAN = 1
 [PWM] PWM enabled, slice =  4 , _frequency =  1000.00
@@ -521,7 +532,7 @@ The following is the sample terminal output when running example [**PWM_MultiCha
 
 ```cpp
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -539,7 +550,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on RASPBERRY_PI_PICO
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -653,7 +664,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform_Fast on RASPBERRY_PI_PICO
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -769,7 +780,7 @@ The following is the sample terminal output when running example [**PWM_manual**
 
 ```cpp
 Starting PWM_manual on RASPBERRY_PI_PICO
-RP2040_PWM v1.5.0
+RP2040_PWM v1.6.0
 =================================================================================================
 Actual data: pin = 10, PWM DutyCycle % = 0.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
 =================================================================================================
@@ -806,7 +817,31 @@ Actual data: pin = 10, PWM DutyCycle % = 50.00, PWMPeriod = 13299, PWM Freq (Hz)
 ...
 ```
 
+---
 
+### 9. PWM_SpeedTest on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [**PWM_SpeedTest**](examples/PWM_SpeedTest) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new faster `setPWM_manual_Fast()` function in wafeform creation, The time is `1597ns` compared to `2889ns` when using `setPWM_manual()` function
+
+```cpp
+Starting PWM_SpeedTest on RASPBERRY_PI_PICO
+RP2040_PWM v1.6.0
+=================================================================================================
+Actual data: pin = 10, PWM DutyCycle % = 0.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+Average time of setPWM function
+ns=1598
+ns=1597
+ns=1597
+ns=1597
+ns=1597
+ns=1597
+ns=1597
+ns=1597
+ns=1597
+ns=1597
+...
+```
 ---
 ---
 
@@ -868,7 +903,8 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
 18. Add example [PWM_manual](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) to demo how to correctly use PWM to generate waveform
 19. Add function `setPWM_DCPercentage_manual()` to facilitate the setting PWM DC manually by using `DCPercentage`, instead of `absolute DCValue` depending on varying `TOP`
 20. Add functions `getPin()` and `getActualDutyCycle()`
-
+21. Optimize speed with new `setPWM_manual_Fast` function to improve almost 50% compared to `setPWM_manual`. Check 
+22. Add example [PWM_SpeedTest](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_SpeedTest) to demo the better speed of new `setPWM_manual_Fast` function
 
 ---
 ---
@@ -889,6 +925,7 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 - [added minimal viable program to get the user up and running #9](https://github.com/khoih-prog/RP2040_PWM/pull/9) leading to v1.3.1
 5. Thanks to [Rocking Y Productions](https://github.com/RockingYProductions) to request enhancement in [Changing Duty Cycle Dynamically Creates Runt PWM pulse #10](https://github.com/khoih-prog/RP2040_PWM/issues/10), leading to v1.4.0
 6. Thanks to [Paul van Dinther](https://github.com/dinther) for proposing new way to use PWM to drive `Stepper-Motor` in [Using PWM to step a stepper driver #16](https://github.com/khoih-prog/RP2040_PWM/issues/16), leading to v1.4.1
+7. Thanks to [jmdodd95682](https://github.com/jmdodd95682) for open discussion about `setPWM_manual()` speed in [setPWM latency #19](https://github.com/khoih-prog/RP2040_PWM/issues/19), leading to v1.6.0
 
 
 <table>
@@ -899,6 +936,9 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
     <td align="center"><a href="https://github.com/Chick92"><img src="https://github.com/Chick92.png" width="100px;" alt="Chick92"/><br /><sub><b>⭐️ Dr. Benjamin Bird</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/RockingYProductions"><img src="https://github.com/RockingYProductions.png" width="100px;" alt="RockingYProductions"/><br /><sub><b>Rocking Y Productions</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/dinther"><img src="https://github.com/dinther.png" width="100px;" alt="dinther"/><br /><sub><b>Paul van Dinther</b></sub></a><br /></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/jmdodd95682"><img src="https://github.com/jmdodd95682.png" width="100px;" alt="jmdodd95682"/><br /><sub><b>jmdodd95682</b></sub></a><br /></td>
   </tr>
 </table>
   

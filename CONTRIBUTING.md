@@ -33,9 +33,9 @@ Please be educated, civilized and constructive as you've always been. Disrespect
 
 ```
 Arduino IDE version: 1.8.19
-Arduino-mbed mbed_nano v3.5.4
-NANO_RP2040_CONNECT Module
-OS: Ubuntu 21.04 LTS
+arduino-pico core v2.7.1
+RASPBERRY_PI_PICO
+OS: Ubuntu 20.04 LTS
 Linux xy-Inspiron-3593 5.15.0-58-generic #64~20.04.1-Ubuntu SMP Fri Jan 6 16:42:31 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
 
 Context:

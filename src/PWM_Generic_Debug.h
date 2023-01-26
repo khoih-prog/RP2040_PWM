@@ -6,7 +6,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/RP2040_PWM
   Licensed under MIT license
 
-  Version: 1.5.0
+  Version: 1.6.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -24,6 +24,7 @@
   1.4.0   K Hoang      15/10/2022 Fix glitch when changing dutycycle. Adjust MIN_PWM_FREQUENCY/MAX_PWM_FREQUENCY dynamically
   1.4.1   K Hoang      21/01/2023 Add `PWM_StepperControl` example
   1.5.0   K Hoang      24/01/2023 Add `PWM_manual` example and functions
+  1.6.0   K Hoang      26/01/2023 Optimize speed with new `setPWM_manual_Fast` function
  *****************************************************************************************************************************/
 
 #pragma once

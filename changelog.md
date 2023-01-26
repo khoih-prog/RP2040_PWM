@@ -18,6 +18,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.6.0](#Releases-v160)
   * [Releases v1.5.0](#Releases-v150)
   * [Releases v1.4.1](#Releases-v141)
   * [Releases v1.4.0](#Releases-v140)
@@ -37,6 +38,12 @@
 ---
 
 ## Changelog
+
+### Releases v1.6.0
+
+1. Optimize speed with new `setPWM_manual_Fast` function to improve almost 50% compared to `setPWM_manual`. Check 
+2. Add example [PWM_SpeedTest](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_SpeedTest) to demo the better speed of new `setPWM_manual_Fast` function
+3. Modify examples [PWM_manual](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) to use new `setPWM_manual_Fast` function
 
 ### Releases v1.5.0
 
