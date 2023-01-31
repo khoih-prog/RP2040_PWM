@@ -13,6 +13,9 @@ PWM_slice KEYWORD1
 # Class RP2040_PWM
 ###################################
 
+setPWMPushPull_Int  KEYWORD2
+setPWMPushPull  KEYWORD2
+setPWMPushPull_Period KEYWORD2
 setPWM_Int	KEYWORD2
 setPWM	KEYWORD2
 setPWM_manual	KEYWORD2

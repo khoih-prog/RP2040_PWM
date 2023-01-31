@@ -18,6 +18,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.7.0](#Releases-v170)
   * [Releases v1.6.0](#Releases-v160)
   * [Releases v1.5.0](#Releases-v150)
   * [Releases v1.4.1](#Releases-v141)
@@ -38,6 +39,17 @@
 ---
 
 ## Changelog
+
+### Releases v1.7.0
+
+1. Add functions `setPWMPushPull_Int`, `setPWMPushPull` and `setPWMPushPull_Period` for the new `PushPull` mode. Check [pwm_set_output_polarity #21](https://github.com/khoih-prog/RP2040_PWM/discussions/21)
+2. Add these examples to demo the new `PushPull` mode
+  - [PWM_PushPull](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull)
+  - [PWM_PushPull_DynamicDC](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicDC)
+  - [PWM_PushPull_DynamicFreq](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicFreq)
+3. Fix bug of half frequency when using `phaseCorrect` mode
+4. Improve `README.md` so that links can be used in other sites, such as `PIO`
+
 
 ### Releases v1.6.0
 

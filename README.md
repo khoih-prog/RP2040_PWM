@@ -34,30 +34,37 @@
   * [2. Initialize PWM Instance](#2-Initialize-PWM-Instance)
   * [3. Set or change PWM frequency or dutyCycle](#3-set-or-change-PWM-frequency-or-dutyCycle)
   * [4. Set or change PWM frequency and dutyCycle manually and efficiently in waveform creation](#4-Set-or-change-PWM-frequency-and-dutyCycle-manually-and-efficiently-in-waveform-creation)
-  * [5. Important Notes](#5-Important-Notes)
+  * [5. Set or change PWM frequency and dutyCycle in PushPull mode](#5-Set-or-change-PWM-frequency-and-dutyCycle-in-PushPull-mode)
+  * [6. Important Notes](#6-Important-Notes)
 * [Examples](#examples)
-  * [ 1. PWM_Multi](examples/PWM_Multi)
-  * [ 2. PWM_DynamicFreq](examples/PWM_DynamicFreq)
-  * [ 3. PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
-  * [ 4. PWM_MultiChannel](examples/PWM_MultiChannel)
-  * [ 5. PWM_Waveform](examples/PWM_Waveform)
-  * [ 6. PWM_Waveform_Fast](examples/PWM_Waveform_Fast)
-  * [ 7. PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int)
-  * [ 8. PWM_Basic](examples/PWM_Basic)
-  * [ 9. PWM_StepperControl](examples/PWM_StepperControl) **New**
-  * [10. PWM_manual](examples/PWM_manual) **New**
-  * [11. PWM_SpeedTest](examples/PWM_SpeedTest) **New**
+  * [ 1. PWM_Multi](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Multi)
+  * [ 2. PWM_DynamicFreq](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicFreq)
+  * [ 3. PWM_DynamicDutyCycle](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle)
+  * [ 4. PWM_MultiChannel](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_MultiChannel)
+  * [ 5. PWM_Waveform](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform)
+  * [ 6. PWM_Waveform_Fast](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform_Fast)
+  * [ 7. PWM_DynamicDutyCycle_Int](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle_Int)
+  * [ 8. PWM_Basic](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Basic)
+  * [ 9. PWM_StepperControl](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_StepperControl) **New**
+  * [10. PWM_manual](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) **New**
+  * [11. PWM_SpeedTest](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_SpeedTest) **New**
+  * [12. PWM_PushPull](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull) **New**
+  * [13. PWM_PushPull_DynamicDC](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicDC) **New**
+  * [14. PWM_PushPull_DynamicFreq](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicFreq) **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
-  * [1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
-  * [2. PWM_Multi on RASPBERRY_PI_PICO](#2-PWM_Multi-on-RASPBERRY_PI_PICO)
-  * [3. PWM_DynamicFreq on Nano RP2040 Connect](#3-PWM_DynamicFreq-on-Nano-RP2040-Connect)
-  * [4. PWM_DynamicDutyCycle on RASPBERRY_PI_PICO](#4-PWM_DynamicDutyCycle-on-RASPBERRY_PI_PICO)
-  * [5. PWM_MultiChannel on RASPBERRY_PI_PICO](#5-PWM_MultiChannel-on-RASPBERRY_PI_PICO)
-  * [6. PWM_Waveform on RASPBERRY_PI_PICO](#6-PWM_Waveform-on-RASPBERRY_PI_PICO)
-  * [7. PWM_Waveform_Fast on RASPBERRY_PI_PICO](#7-PWM_Waveform_Fast-on-RASPBERRY_PI_PICO)
-  * [8. PWM_manual on RASPBERRY_PI_PICO](#8-PWM_manual-on-RASPBERRY_PI_PICO)
-  * [9. PWM_SpeedTest on RASPBERRY_PI_PICO](#9-PWM_SpeedTest-on-RASPBERRY_PI_PICO)
+  * [ 1. PWM_Multi on MBED RaspberryPi Pico](#1-PWM_Multi-on-MBED-RaspberryPi-Pico)
+  * [ 2. PWM_Multi on RASPBERRY_PI_PICO](#2-PWM_Multi-on-RASPBERRY_PI_PICO)
+  * [ 3. PWM_DynamicFreq on Nano RP2040 Connect](#3-PWM_DynamicFreq-on-Nano-RP2040-Connect)
+  * [ 4. PWM_DynamicDutyCycle on RASPBERRY_PI_PICO](#4-PWM_DynamicDutyCycle-on-RASPBERRY_PI_PICO)
+  * [ 5. PWM_MultiChannel on RASPBERRY_PI_PICO](#5-PWM_MultiChannel-on-RASPBERRY_PI_PICO)
+  * [ 6. PWM_Waveform on RASPBERRY_PI_PICO](#6-PWM_Waveform-on-RASPBERRY_PI_PICO)
+  * [ 7. PWM_Waveform_Fast on RASPBERRY_PI_PICO](#7-PWM_Waveform_Fast-on-RASPBERRY_PI_PICO)
+  * [ 8. PWM_manual on RASPBERRY_PI_PICO](#8-PWM_manual-on-RASPBERRY_PI_PICO)
+  * [ 9. PWM_SpeedTest on RASPBERRY_PI_PICO](#9-PWM_SpeedTest-on-RASPBERRY_PI_PICO)
+  * [10. PWM_PushPull on RASPBERRY_PI_PICO](#10-PWM_PushPull-on-RASPBERRY_PI_PICO)
+  * [11. PWM_PushPull_DynamicDC on RASPBERRY_PI_PICO](#11-PWM_PushPull_DynamicDC-on-RASPBERRY_PI_PICO)
+  * [12. PWM_PushPull_DynamicFreq on RASPBERRY_PI_PICO](#12-PWM_PushPull_DynamicFreq-on-RASPBERRY_PI_PICO)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -100,7 +107,7 @@ The most important feature is they're purely hardware-based PWM channels. Theref
 
 This important feature is absolutely necessary for mission-critical tasks. These hardware PWM-channels, still work even if other software functions are blocking. Moreover, they are much more precise (certainly depending on clock frequency accuracy) than other software timers using `millis()` or `micros()`. That's necessary if you need to control external systems (Servo, etc.) requiring better accuracy.
 
-The [**PWM_Multi**](examples/PWM_Multi) example will demonstrate the usage of multichannel PWM using multiple Hardware-PWM blocks (slices). The 8 independent Hardware-PWM slices are used **to control 8 different PWM outputs**, with totally independent frequencies and dutycycles.
+The [**PWM_Multi**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Multi) example will demonstrate the usage of multichannel PWM using multiple Hardware-PWM blocks (slices). The 8 independent Hardware-PWM slices are used **to control 8 different PWM outputs**, with totally independent frequencies and dutycycles.
 
 Being hardware-based PWM, their executions are not blocked by bad-behaving functions / tasks, such as connecting to WiFi, Internet or Blynk services. You can also have many `(up to 16)` PWM output signals to use.
 
@@ -233,6 +240,8 @@ RP2040_PWM* PWM_Instance;
 PWM_Instance = new RP2040_PWM(PWM_Pins, freq, dutyCycle);
 ```
 
+---
+
 #### 2. Initialize PWM Instance
 
 ```cpp
@@ -241,6 +250,8 @@ if (PWM_Instance)
   PWM_Instance->setPWM();
 }
 ```
+
+---
 
 #### 3. Set or change PWM frequency or dutyCycle
 
@@ -277,6 +288,8 @@ Serial.print(F("Change PWM DutyCycle to ")); Serial.println((float) dutyCycle / 
 PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
 ```
 
+---
+
 #### 4. Set or change PWM frequency and dutyCycle manually and efficiently in waveform creation
 
 Need to call only once for each pin
@@ -308,8 +321,52 @@ and the fastest
 new_level = 50.0f * PWM_Instance->get_TOP() / 100.0f;
 PWM_Instance->setPWM_manual_Fast(pinToUse, dutycycle);
 ```
+---
 
-#### 5. Important Notes
+#### 5. Set or change PWM frequency and dutyCycle in PushPull mode
+
+To use a pair of pins of the same channel / slice. Check [Programmer’s Model](#Programmers-Model)
+
+Need to call only once for each pair of pins
+
+```cpp
+float frequency = 2000.0f;
+float dutyCycle = 30.0f;
+
+// Pins have to be in pairs of the same PWM slice / channel
+// Check https://github.com/khoih-prog/RP2040_PWM#programmers-model
+// For example: pins 0/1, 2/3, 4/5, 6/7, 8/9, 10/11, 12/13, 14/15, 16/17, 18/19, 20/21, 22/23, 24/25, 26/27, 28/29
+
+#define pinToUseA      18     // PWM1A
+#define pinToUseB      19     // PWM1A
+
+// Use just one of these 2 for a pair
+// assigns pinToUseA, with frequency of 200 Hz and a duty cycle of 0%
+PWM_Instance = new RP2040_PWM(pinToUseA, frequency, 0);
+// assigns pinToUseB, with frequency of 200 Hz and a duty cycle of 0%
+//PWM_Instance = new RP2040_PWM(pinToUseB, frequency, 0);
+```
+
+after that, if just changing `dutyCycle` / `level`, use 
+
+```cpp
+// For 50.0f dutycycle
+new_dutyCycle = 50.0f;
+PWM_Instance->setPWMPushPull(pinToUseA, pinToUseB, frequency, new_dutyCycle);
+```
+
+or if just changing `frequency`, use 
+
+
+```cpp
+// For 50.0f dutycycle
+new_frequency = 1000.0f;
+PWM_Instance->setPWMPushPull(pinToUseA, pinToUseB, new_frequency, dutyCycle);
+```
+
+---
+
+#### 6. Important Notes
 
 ##### When using `phaseCorrect == true`
 
@@ -349,23 +406,25 @@ PWM_Instance->setPWM_Int(pinToUse, frequency, dutyCycle);
 
 ### Examples: 
 
- 1. [PWM_Multi](examples/PWM_Multi)
- 2. [PWM_DynamicFreq](examples/PWM_DynamicFreq)
- 3. [PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle)
- 4. [PWM_MultiChannel](examples/PWM_MultiChannel)
- 5. [PWM_Waveform](examples/PWM_Waveform)
- 6. [PWM_Waveform_Fast](examples/PWM_Waveform_Fast)
- 7. [PWM_DynamicDutyCycle_Int](examples/PWM_DynamicDutyCycle_Int)
- 8. [PWM_Basic](examples/PWM_Basic)
- 9. [PWM_StepperControl](examples/PWM_StepperControl) **New**
-10. [PWM_manual](examples/PWM_manual) **New** 
-11. [PWM_SpeedTest](examples/PWM_SpeedTest) **New** 
- 
+ 1. [PWM_Multi](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Multi)
+ 2. [PWM_DynamicFreq](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicFreq)
+ 3. [PWM_DynamicDutyCycle](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle)
+ 4. [PWM_MultiChannel](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_MultiChannel)
+ 5. [PWM_Waveform](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform)
+ 6. [PWM_Waveform_Fast](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform_Fast)
+ 7. [PWM_DynamicDutyCycle_Int](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle_Int)
+ 8. [PWM_Basic](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Basic)
+ 9. [PWM_StepperControl](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_StepperControl) **New**
+10. [PWM_manual](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) **New** 
+11. [PWM_SpeedTest](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_SpeedTest) **New** 
+12. [PWM_PushPull](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull) **New**
+13. [PWM_PushPull_DynamicDC](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicDC) **New**
+14. [PWM_PushPull_DynamicFreq](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicFreq) **New**
  
 ---
 ---
 
-### Example [PWM_Multi](examples/PWM_Multi)
+### Example [PWM_Multi](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Multi)
 
 https://github.com/khoih-prog/RP2040_PWM/blob/57df7e0a3ff7d3ff64e1611e82e593c2f744a20d/examples/PWM_Multi/PWM_Multi.ino#L14-L114
 
@@ -377,12 +436,12 @@ https://github.com/khoih-prog/RP2040_PWM/blob/57df7e0a3ff7d3ff64e1611e82e593c2f7
 
 ### 1. PWM_Multi on MBED RaspberryPi Pico
 
-The following is the sample terminal output when running example [PWM_Multi](examples/PWM_Multi) on **RaspberryPi Pico**, running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
+The following is the sample terminal output when running example [PWM_Multi](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Multi) on **RaspberryPi Pico**, running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
 
 
 ```cpp
 Starting PWM_Multi on RaspberryPi Pico
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -402,11 +461,11 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 
 ### 2. PWM_Multi on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_Multi**](examples/PWM_Multi) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
+The following is the sample terminal output when running example [**PWM_Multi**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Multi) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to provide high PWM frequencies and the accuracy of Hardware-based PWM, **especially when system is very busy**.
 
 ```cpp
 Starting PWM_Multi on RASPBERRY_PI_PICO
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -426,11 +485,11 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 
 ### 3. PWM_DynamicFreq on Nano RP2040 Connect
 
-The following is the sample terminal output when running example [**PWM_DynamicFreq**](examples/PWM_DynamicFreq) on **Nano RP2040 Connect**, running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to change dynamically PWM frequencies and the accuracy of Hardware-based PWM.
+The following is the sample terminal output when running example [**PWM_DynamicFreq**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicFreq) on **Nano RP2040 Connect**, running [`ArduinoCore-mbed mbed_rp2040 core`](https://github.com/arduino/ArduinoCore-mbed), to demonstrate the ability to change dynamically PWM frequencies and the accuracy of Hardware-based PWM.
 
 ```cpp
 Starting PWM_DynamicFreq on Nano RP2040 Connect
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] PWM enabled, frequency = 1000.00
 =============================================================
@@ -471,11 +530,11 @@ Actual PWM Frequency = 2000.00
 
 ### 4. PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_DynamicDutyCycle**](examples/PWM_DynamicDutyCycle) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to change dynamically PWM dutyCycle and the accuracy of Hardware-based PWM.
+The following is the sample terminal output when running example [**PWM_DynamicDutyCycle**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_DynamicDutyCycle) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to change dynamically PWM dutyCycle and the accuracy of Hardware-based PWM.
 
 ```cpp
 Starting PWM_DynamicDutyCycle on RASPBERRY_PI_PICO
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 [PWM] _PWM_config.top = 13299 , _actualFrequency = 1000.00
 [PWM] pin =  25 , PWM_CHAN = 1
 [PWM] PWM enabled, slice =  4 , _frequency =  1000.00
@@ -527,12 +586,12 @@ Actual PWM Frequency = 2000.00
 
 ### 5. PWM_MultiChannel on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_MultiChannel**](examples/PWM_MultiChannel) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to output for both channels of a PWM slice
+The following is the sample terminal output when running example [**PWM_MultiChannel**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_MultiChannel) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate the ability to output for both channels of a PWM slice
 
 
 ```cpp
 Starting PWM_MultiChannel on RASPBERRY_PI_PICO
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 =============================================================
 Index	Pin	PWM_freq	DutyCycle	Actual Freq
 =============================================================
@@ -545,12 +604,12 @@ Index	Pin	PWM_freq	DutyCycle	Actual Freq
 
 ### 6. PWM_Waveform on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_Waveform**](examples/PWM_Waveform) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
+The following is the sample terminal output when running example [**PWM_Waveform**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform) on **RASPBERRY_PI_PICO**, running [`Earle Philhower's arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
 
 
 ```cpp
 Starting PWM_Waveform on RASPBERRY_PI_PICO
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -659,12 +718,12 @@ RP2040_PWM v1.6.0
 
 ### 7. PWM_Waveform_Fast on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_Waveform_Fast**](examples/PWM_Waveform_Fast) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
+The following is the sample terminal output when running example [**PWM_Waveform_Fast**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_Waveform_Fast) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_manual()` function in wafeform creation
 
 
 ```cpp
 Starting PWM_Waveform_Fast on RASPBERRY_PI_PICO
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 [PWM] _PWM_config.top = 12499 , _actualFrequency = 1000.00
 [PWM] pin =  10 , PWM_CHAN = 0
 [PWM] PWM enabled, slice = 5 , top = 1000 , div = 10 , level = 0
@@ -775,12 +834,12 @@ RP2040_PWM v1.6.0
 
 ### 8. PWM_manual on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_manual**](examples/PWM_manual) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_DCPercentage_manual()` function in wafeform creation
+The following is the sample terminal output when running example [**PWM_manual**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_manual) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new `setPWM_DCPercentage_manual()` function in wafeform creation
 
 
 ```cpp
 Starting PWM_manual on RASPBERRY_PI_PICO
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 =================================================================================================
 Actual data: pin = 10, PWM DutyCycle % = 0.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
 =================================================================================================
@@ -821,11 +880,11 @@ Actual data: pin = 10, PWM DutyCycle % = 50.00, PWMPeriod = 13299, PWM Freq (Hz)
 
 ### 9. PWM_SpeedTest on RASPBERRY_PI_PICO
 
-The following is the sample terminal output when running example [**PWM_SpeedTest**](examples/PWM_SpeedTest) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new faster `setPWM_manual_Fast()` function in wafeform creation, The time is `1597ns` compared to `2889ns` when using `setPWM_manual()` function
+The following is the sample terminal output when running example [**PWM_SpeedTest**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_SpeedTest) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demonstrate how to use new faster `setPWM_manual_Fast()` function in wafeform creation, The time is `1597ns` compared to `2889ns` when using `setPWM_manual()` function
 
 ```cpp
 Starting PWM_SpeedTest on RASPBERRY_PI_PICO
-RP2040_PWM v1.6.0
+RP2040_PWM v1.7.0
 =================================================================================================
 Actual data: pin = 10, PWM DutyCycle % = 0.00, PWMPeriod = 13299, PWM Freq (Hz) = 1000.0000
 =================================================================================================
@@ -840,6 +899,105 @@ ns=1597
 ns=1597
 ns=1597
 ns=1597
+...
+```
+
+---
+
+### 10. PWM_PushPull on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [**PWM_PushPull**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demo the new `PushPull` mode
+
+```cpp
+Starting PWM_PushPull on RASPBERRY_PI_PICO
+RP2040_PWM v1.7.0
+[PWM] _PWM_config.top = 6249 , _actualFrequency = 2000.00
+[PWM] _PWM_config.top = 3124 , _actualFrequency = 2000.00
+[PWM] Changing PWM frequency to 2000.00 and dutyCycle = 30.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 3124 , DIV = 10 , CPU_freq = 125000000
+```
+
+
+---
+
+### 11. PWM_PushPull_DynamicDC on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [**PWM_PushPull_DynamicDC**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicDC) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demo the new `PushPull` mode
+
+```cpp
+Starting PWM_PushPull_DynamicDC on RASPBERRY_PI_PICO
+RP2040_PWM v1.7.0
+[PWM] _PWM_config.top = 6249 , _actualFrequency = 2000.00
+[PWM] _PWM_config.top = 3124 , _actualFrequency = 2000.00
+[PWM] Changing PWM frequency to 2000.00 and dutyCycle = 0.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Change PWM DutyCycle to 50.00
+[PWM] Changing PWM DutyCycle to 50.00 and keeping frequency = 2000.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 3124 , DIV = 10 , CPU_freq = 125000000
+Change PWM DutyCycle to 10.00
+[PWM] Changing PWM DutyCycle to 10.00 and keeping frequency = 2000.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 3124 , DIV = 10 , CPU_freq = 125000000
+Change PWM DutyCycle to 50.00
+[PWM] Changing PWM DutyCycle to 50.00 and keeping frequency = 2000.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 3124 , DIV = 10 , CPU_freq = 125000000
+...
+```
+
+
+---
+
+### 12. PWM_PushPull_DynamicFreq on RASPBERRY_PI_PICO
+
+The following is the sample terminal output when running example [**PWM_PushPull_DynamicFreq**](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicFreq) on **RASPBERRY_PI_PICO**, running [`arduino-pico core`](https://github.com/earlephilhower/arduino-pico), to demo the new `PushPull` mode
+
+```cpp
+Starting PWM_PushPull_DynamicFreq on RASPBERRY_PI_PICO
+RP2040_PWM v1.7.0
+[PWM] _PWM_config.top = 6249 , _actualFrequency = 2000.00
+[PWM] _PWM_config.top = 3124 , _actualFrequency = 2000.00
+[PWM] Changing PWM frequency to 2000.00 and dutyCycle = 0.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Change PWM Freq to 2000.00
+[PWM] Changing PWM DutyCycle to 30.00 and keeping frequency = 2000.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 3124 , DIV = 10 , CPU_freq = 125000000
+Change PWM Freq to 1000.00
+[PWM] _PWM_config.top = 6249 , _actualFrequency = 1000.00
+[PWM] Changing PWM frequency to 1000.00 and dutyCycle = 30.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  1000.00
+Actual PWM Frequency = 1000.00
+[PWM] TOP = 6249 , DIV = 10 , CPU_freq = 125000000
+Change PWM Freq to 2000.00
+[PWM] _PWM_config.top = 3124 , _actualFrequency = 2000.00
+[PWM] Changing PWM frequency to 2000.00 and dutyCycle = 30.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  2000.00
+Actual PWM Frequency = 2000.00
+[PWM] TOP = 3124 , DIV = 10 , CPU_freq = 125000000
+Change PWM Freq to 1000.00
+[PWM] _PWM_config.top = 6249 , _actualFrequency = 1000.00
+[PWM] Changing PWM frequency to 1000.00 and dutyCycle = 30.00
+[PWM] pinA =  18 , pinB =  19 , PWM_CHAN = 0
+[PWM] PWM enabled, slice =  1 , _frequency =  1000.00
+Actual PWM Frequency = 1000.00
+[PWM] TOP = 6249 , DIV = 10 , CPU_freq = 125000000
 ...
 ```
 ---
@@ -905,6 +1063,15 @@ Submit issues to: [RP2040_PWM issues](https://github.com/khoih-prog/RP2040_PWM/i
 20. Add functions `getPin()` and `getActualDutyCycle()`
 21. Optimize speed with new `setPWM_manual_Fast` function to improve almost 50% compared to `setPWM_manual`. Check 
 22. Add example [PWM_SpeedTest](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_SpeedTest) to demo the better speed of new `setPWM_manual_Fast` function
+23. Add functions `setPWMPushPull_Int`, `setPWMPushPull` and `setPWMPushPull_Period` for the new `PushPull` mode
+24. Add these examples to demo the new `PushPull` mode
+  - [PWM_PushPull](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull)
+  - [PWM_PushPull_DynamicDC](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicDC)
+  - [PWM_PushPull_DynamicFreq](https://github.com/khoih-prog/RP2040_PWM/tree/main/examples/PWM_PushPull_DynamicFreq)
+25. Fix bug of half frequency when using `phaseCorrect` mode
+26. Improve `README.md` so that links can be used in other sites, such as `PIO`
+
+
 
 ---
 ---
@@ -926,6 +1093,7 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 5. Thanks to [Rocking Y Productions](https://github.com/RockingYProductions) to request enhancement in [Changing Duty Cycle Dynamically Creates Runt PWM pulse #10](https://github.com/khoih-prog/RP2040_PWM/issues/10), leading to v1.4.0
 6. Thanks to [Paul van Dinther](https://github.com/dinther) for proposing new way to use PWM to drive `Stepper-Motor` in [Using PWM to step a stepper driver #16](https://github.com/khoih-prog/RP2040_PWM/issues/16), leading to v1.4.1
 7. Thanks to [jmdodd95682](https://github.com/jmdodd95682) for open discussion about `setPWM_manual()` speed in [setPWM latency #19](https://github.com/khoih-prog/RP2040_PWM/issues/19), leading to v1.6.0
+8. Thanks to [tinkerbug](https://github.com/tinkerbug) for open discussion about `pwm_set_output_polarity()` function in [pwm_set_output_polarity #21](https://github.com/khoih-prog/RP2040_PWM/discussions/21), leading to v1.7.0
 
 
 <table>
@@ -939,6 +1107,7 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/jmdodd95682"><img src="https://github.com/jmdodd95682.png" width="100px;" alt="jmdodd95682"/><br /><sub><b>jmdodd95682</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/tinkerbug"><img src="https://github.com/tinkerbug.png" width="100px;" alt="tinkerbug"/><br /><sub><b>tinkerbug</b></sub></a><br /></td>
   </tr>
 </table>
   
